@@ -4,17 +4,22 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
 	version="2.1">
-
-	<persistence-unit name="BookStoreWebsite">
+	<persistence-unit name="BookStoreWebsite"
+		transaction-type="RESOURCE_LOCAL">
+		<!-- Define the class for Hibernate which implements JPA -->
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<!-- Define the object that should be persisted in the database -->
+		<class>com.bookstore.entity.Users</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://localhost:3306/bookstoredb?autoReconnect=true" />
-			<property name="javax.persistence.jdbc.user" value="root" />
-			<property name="javax.persistence.jdbc.password" value="password" />
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+				value="jdbc:mysql://localhost/bookstoredb?useSSL=false" />
+			<property name="javax.persistence.jdbc.user"
+				value="root" />
+			<property name="javax.persistence.jdbc.password"
+				value="31102003" />
+			<property name="javax.persistence.jdbc.driver"
+				value="com.mysql.jdbc.Driver" />
 			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="true" />
 		</properties>
 	</persistence-unit>
-
 </persistence>

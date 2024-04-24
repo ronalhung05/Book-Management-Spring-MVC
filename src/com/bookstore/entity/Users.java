@@ -3,21 +3,42 @@ package com.bookstore.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
-@Entity 
+@Entity
+@NamedQueries({
+	@NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u ORDER BY u.fullName"),
+	@NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email"),
+	@NamedQuery(name = "Users.countAll", query = "SELECT Count(*) FROM Users u"),
+	@NamedQuery(name = "Users.checkLogin", query = "SELECT u FROM Users u WHERE u.email = :email AND password = :password")
+})
 public class Users {
-	@Id
-	@Column(name = "user_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer userId;
-	
 	private String email;
 	private String fullName;
 	private String password;
 
+	public Users() {
+	}
 
+	public Users(Integer userId, String email, String fullName, String password) {
+		this(email, fullName, password);
+		this.userId = userId;
+	}
+	
+	public Users(String email, String fullName, String password) {
+		super();
+		this.email = email;
+		this.fullName = fullName;
+		this.password = password;
+	}
+
+	@Column(name = "user_id")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer getUserId() {
 		return userId;
 	}
@@ -34,6 +55,7 @@ public class Users {
 		this.email = email;
 	}
 
+	@Column(name = "full_name")
 	public String getFullName() {
 		return fullName;
 	}
@@ -50,4 +72,6 @@ public class Users {
 		this.password = password;
 	}
 
+
+	
 }

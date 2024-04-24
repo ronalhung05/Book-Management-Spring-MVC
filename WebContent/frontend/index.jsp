@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Books Store Website</title>
+<title>Evergreen Books - Online Books Store</title>
 </head>
 <body>
-	<h1>Welcome to Evergreen Book Store</h1>
+	<jsp:directive.include file="header.jsp" />
+	<jsp:directive.include file="footer.jsp" />
 </body>
 </html>
