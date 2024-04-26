@@ -39,7 +39,7 @@ public class UserServices {
 	}
 
 	public void createUser() throws ServletException, IOException {
-		String email = request.getParameter("mail");
+		String email = request.getParameter("email");
 		String fullName = request.getParameter("fullname");
 		String password = request.getParameter("password");
 
@@ -76,7 +76,7 @@ public class UserServices {
 	public void updateUser() throws ServletException, IOException {
 
 		int userId = Integer.parseInt(request.getParameter("userId"));
-		String email = request.getParameter("mail");
+		String email = request.getParameter("email");
 		String fullName = request.getParameter("fullname");
 		String password = request.getParameter("password");
 

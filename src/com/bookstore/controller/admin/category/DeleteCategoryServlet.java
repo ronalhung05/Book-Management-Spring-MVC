@@ -23,7 +23,7 @@ public class DeleteCategoryServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		CategoryServices categoryServices = new CategoryServices(request, response);
-		//categoryServices.deleteCategory();
+		categoryServices.deleteCategory();
 	}
 
 }

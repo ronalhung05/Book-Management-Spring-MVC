@@ -1,7 +1,6 @@
-package com.bookstore.controller.admin.user;
+package com.bookstore.controller.admin;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,18 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.bookstore.service.UserServices;
 
 
-@WebServlet("/admin/update_user")
-public class UpdateUserServlet extends HttpServlet {
+@WebServlet("/admin/login")
+public class AdminLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-  
-    public UpdateUserServlet() {
+    public AdminLoginServlet() {
         super();
     }
-    
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserServices userServices = new UserServices(request,response);
-		userServices.updateUser();
+		 UserServices services =  new UserServices(request, response);
+		 services.login();
 	}
 
 }

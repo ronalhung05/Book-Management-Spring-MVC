@@ -19,7 +19,11 @@ public class AdminHomeController extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	
+    @Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String page = "index.jsp";
 		System.out.println("AdminHomeServlet");
