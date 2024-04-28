@@ -6,9 +6,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Manage Books - Evergreen Bookstore Administration</title>
-<link rel="stylesheet" href="../css/style.css" >
+	<meta charset="ISO-8859-1">
+	<title>Manage Books - Evergreen Bookstore Administration</title>
+	<link rel="stylesheet" href="../css/style.css" >
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />

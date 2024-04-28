@@ -20,6 +20,16 @@
 			<property name="javax.persistence.jdbc.driver"
 				value="com.mysql.jdbc.Driver" />
 			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			
+			
+			<!-- Connection pool configuration using the c3p0 library --> 
+			     	
+        <!--   <property name="hibernate.c3p0.min_size" value="5"/>
+			<property name="hibernate.c3p0.max_size" value="10"/>
+			<property name="hibernate.c3p0.timeout" value="28800"/>
+			<property name="hibernate.c3p0.max_statements" value="50"/>
+			<property name="hibernate.c3p0.idle_test_period" value="100"/> -->
 		</properties>
 	</persistence-unit>
 </persistence>
