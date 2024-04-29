@@ -188,6 +188,11 @@ table.book {
 	margin: o auto;
 }
 
+table.customer {
+	width: 50%;
+	border: 0;
+	margin: o auto;
+}
 img.book_small {
 	width: 100px;
 	height: 150x;

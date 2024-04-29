@@ -39,8 +39,7 @@
 				<th>Last Updated</th>
 				<th>Actions</th>
 			</tr>
-			<c:forEach var="book" items="${listBook }"
-				varStatus="status">
+			<c:forEach var="book" items="${listBook}" varStatus="status">
 				<tr>
 					<td>${status.index + 1}</td>
 					<td>${book.bookId}</td>

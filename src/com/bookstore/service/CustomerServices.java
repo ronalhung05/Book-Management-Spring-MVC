@@ -22,6 +22,30 @@ public class CustomerServices {
 		this.request = request;
 		this.response = response;
 	}
+	private void updateCustomerFieldsFromForm(Customer customer) {
+		String email = request.getParameter("email");
+		String fullName = request.getParameter("fullName");
+		String password = request.getParameter("password");
+		String phone = request.getParameter("phone");
+		String address = request.getParameter("address");
+		String city = request.getParameter("city");
+		String zipcode = request.getParameter("zipcode");
+		String country = request.getParameter("country");
+		
+		if(email != null && !email.equals("")) {
+			customer.setEmail(email);
+		}
+		customer.setFullname(fullName);
+		
+		if(password != null && !password.equals("")) {
+			customer.setPassword(password);
+		}
+		customer.setPhone(phone);
+		customer.setAddress(address);
+		customer.setCity(city);
+		customer.setZipcode(zipcode);
+		customer.setCountry(country);
+	}
 	public void listCustomer() throws ServletException, IOException {
 		
 		listCustomer(null);
@@ -47,27 +71,111 @@ public class CustomerServices {
 			String message = "Could not create customer: the email " + email + " is already registered by another customer.";
 			listCustomer(message);
 		}else {
-			String fullName = request.getParameter("fullName");
-			String password = request.getParameter("password");
-			String phone = request.getParameter("phone");
-			String address = request.getParameter("address");
-			String city = request.getParameter("city");
-			String zipcode = request.getParameter("zipcode");
-			String country = request.getParameter("country");
-			
 			Customer newCustomer = new Customer();
-			newCustomer.setEmail(email);
-			newCustomer.setFullname(fullName);
-			newCustomer.setPassword(password);
-			newCustomer.setPhone(phone);
-			newCustomer.setAddress(address);
-			newCustomer.setCity(city);
-			newCustomer.setZipcode(zipcode);
-			newCustomer.setCountry(country);
-			
+			updateCustomerFieldsFromForm(newCustomer);
 			customerDAO.create(newCustomer);
+			
 			String message = "New customer has been created successfully";
 			listCustomer(message);
 		}
+	}
+	public void editCustomer() throws ServletException, IOException {
+		Integer customerId = Integer.parseInt(request.getParameter("id"));
+		Customer customer = customerDAO.get(customerId);
+		request.setAttribute("customer", customer);
+		
+		String editPage = "customer_form.jsp";
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(editPage);
+		requestDispatcher.forward(request, response);
+		
+	}
+	public void updateCustomer() throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		Integer customerId = Integer.parseInt(request.getParameter("customerId"));
+		String email = request.getParameter("email");
+		
+		Customer customerByEmail = customerDAO.findByEmail(email);
+		String message = null;
+		
+		if(customerByEmail != null && customerByEmail.getCustomerId() != customerId) {
+			message = "Could not update the customer ID " + customerId +
+					" because there's an existing customer having the same email.";
+		}else {
+			Customer customerById = customerDAO.get(customerId);
+			updateCustomerFieldsFromForm(customerById);
+			
+			customerDAO.update(customerById);
+			message = "The customer has been updated successfully.";
+			
+		}
+		listCustomer(message);
+	}
+	public void deleteCustomer() throws ServletException, IOException {
+		Integer customerId = Integer.parseInt(request.getParameter("id"));
+		customerDAO.delete(customerId);
+		
+		String message = "The customer has been deleted successfully.";
+		listCustomer(message);
+	}
+	public void registerCustomer() throws ServletException, IOException {
+		String email = request.getParameter("email");
+		Customer existCustomer = customerDAO.findByEmail(email);
+		String message = "";
+		if(existCustomer != null) {
+			message = "Could not register customer: the email " 
+					+ email + " is already registered by another customer.";
+		}else {
+			Customer newCustomer = new Customer();
+			updateCustomerFieldsFromForm(newCustomer);
+			
+			customerDAO.create(newCustomer);
+			message = "You have registered successfully! Thank you.<br/>"
+					+ "<a href = 'login'>Click here</a> to login";
+			
+		}
+		String messagePage = "frontend/message.jsp";
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(messagePage);
+		request.setAttribute("message", message);
+		requestDispatcher.forward(request, response);
+	}
+	public void showLogin() throws ServletException, IOException {
+		String loginPage = "frontend/login.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(loginPage);
+		dispatcher.forward(request, response);
+	}
+	public void doLogin() throws ServletException, IOException {
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		
+		Customer customer = customerDAO.checkLogin(email, password);
+		
+		if(customer == null) {
+			String message = "Login failed. Please check your email and password.";
+			request.setAttribute("message", message);
+			showLogin();
+		}
+		else {
+			request.getSession().setAttribute("loggedCustomer", customer);
+			String profilePage = "frontend/customer_profile.jsp";
+			RequestDispatcher dispatcher = request.getRequestDispatcher(profilePage);
+			dispatcher.forward(request, response);
+		}
+		
+	}
+	public void showCustomerProfile() throws ServletException, IOException {
+		String profilePage = "frontend/customer_profile.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(profilePage);
+		dispatcher.forward(request, response);
+	}
+	public void showCustomerProfileEditForm() throws ServletException, IOException {
+		String editPage = "frontend/edit_profile.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(editPage);
+		dispatcher.forward(request, response);
+	}
+	public void updateCustomerProfile() throws ServletException, IOException {
+		Customer customer = (Customer)request.getSession().getAttribute("loggedCustomer");
+		updateCustomerFieldsFromForm(customer);
+		customerDAO.update(customer);
+		showCustomerProfile();
 	}
 }

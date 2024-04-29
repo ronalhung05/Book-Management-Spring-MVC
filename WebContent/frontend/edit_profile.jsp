@@ -1,88 +1,78 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Create Customers - Evergreen Bookstore Administration</title>
-	<link href="../css/jquery-ui.min.css" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" href="../css/style.css" >
-	
-	<script type="text/javascript" src="../js/jquery-3.7.1.min.js"></script>
-	<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+	<title>Register as a Customer</title>
+	<link rel="stylesheet" href="css/style.css" >
+	<link href="/css/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="js/jquery-3.7.1.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
 </head>
 <body>
 		<jsp:directive.include file="header.jsp" />
 
 		<div align = "center">
 			<h2 class = "pageheading">
-				<c:if test = "${customer != null }">
-					Edit Customer
-				</c:if>
-				<c:if test = "${customer == null }">
-					Create New Customer
-				</c:if>
+				Edit My Profile
 			</h2>
 		</div>
 
 		<div align = "center">
-			<c:if test="${customer != null}">
-				<form action="update_customer" name = "customerForm" id = "customerForm" method="post">
-				<input type="hidden" name="customerId" value="${customer.customerId}">
-			</c:if>
-			<c:if test="${customer == null}">
-				<form action="create_customer"  name = "customerForm" id = "customerForm" method="post">
-			</c:if>
-		
+		<form action="update_profile" id = "customerForm" method = "post">
 		<table class="form">
 			<tbody>
 				<tr>
 					<td align="right">E-mail:</td>
-					<td align="left"><input type="text" id="email" name="email"
-						size="45" value="${customer.email}"></td>
+					<td align="left"><b>${loggedCustomer.email} (Cannot be changed)</b></td>
 				</tr>
 				<tr>
 					<td align="right">Full Name:</td>
 					<td align="left"><input type="text" id="fullName"
-						name="fullName" size="45" value="${customer.fullname}"></td>
-				</tr>
-				<tr>
-					<td align="right">Password:</td>
-					<td align="left"><input type="password" id="password"
-						name="password" size="45" value="${customer.password}"></td>
-				</tr>
-				<tr>
-					<td align="right">Confirm Password:</td>
-					<td align="left"><input type="password" id="confirmPassword"
-						name="confirmPassword" size="45" value="${customer.password}"></td>
+						name="fullName" size="45" value ="${loggedCustomer.fullname}"></td>
 				</tr>
 				<tr>
 					<td align="right">Phone Number:</td>
 					<td align="left"><input type="text" id="phone" name="phone"
-						size="45" value="${customer.phone}"></td>
+						size="45" value ="${loggedCustomer.phone}"></td>
 				</tr>
 				<tr>
 					<td align="right">Address:</td>
 					<td align="left"><input type="text" id="address"
-						name="address" size="45" value="${customer.address}"></td>
+						name="address" size="45" value ="${loggedCustomer.address}"></td>
 				</tr>
 				<tr>
 					<td align="right">City:</td>
 					<td align="left"><input type="text" id="city" name="city"
-						size="45" value="${customer.city}"></td>
+						size="45" value ="${loggedCustomer.city}"></td>
 				</tr>
 				<tr>
 					<td align="right">ZipCode:</td>
 					<td align="left"><input type="text" id="zipcode"
-						name="zipcode" size="45" value="${customer.zipcode}"></td>
+						name="zipcode" size="45" value ="${loggedCustomer.zipcode}"></td>
 				</tr>
 				<tr>
 					<td align="right">Country:</td>
 					<td align="left"><input type="text" id="country"
-						name="country" size="45" value="${customer.country}"></td>
+						name="country" size="45" value ="${loggedCustomer.country}"></td>
+				</tr>
+				<tr>
+					<td colspan = "2" align = "center">
+						<i>(Leave password fields blank if you don't want to change password)</i>
+					</td>
+				</tr>
+				<tr>
+					<td align="right">Password:</td>
+					<td align="left"><input type="password" id="password"
+						name="password" size="45"></td>
+				</tr>
+				<tr>
+					<td align="right">Confirm Password:</td>
+					<td align="left"><input type="password" id="confirmPassword"
+						name="confirmPassword" size="45"></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -95,7 +85,7 @@
 			</tbody>
 		</table>
 		</form>
-	</div>
+		</div>
 	<jsp:directive.include file="footer.jsp" />
 
 <script type="text/javascript">
@@ -108,9 +98,7 @@
 				 email: true
 				},
 				fullName : "required",
-				password : "required",
 				confirmPassword: {
-				 required: true,
 				 equalTo: "#password"
 				},
 				phone : "required",
@@ -126,9 +114,7 @@
 					email: "Please enter a valid e-mail address"
 				},
 				fullName : "Please enter full name",
-				password : "Please enter password",
 				confirmPassword : { 
-					required: "Please confirm password",
 					equalTo: "Confirm password does not match password"
 				},
 				phone : "Please enter phone number",

@@ -54,33 +54,33 @@
 		</form>
 	</diV>
 	<jsp:directive.include file="footer.jsp" />
-</body>
-<script type="text/javascript">
+	<script type="text/javascript">
 
-$(document).ready(function() {
-	$("#categoryForm").validate({
-		rules : {
-			categoryName : "required"
-		},
-		messages : {
-			categoryName : "Please enter category name"		}
-	});
-
-	$("#buttonCancel").click(function() {
-		history.go(-1);
-	});
-
-});
-
+	$(document).ready(function() {
+		$("#categoryForm").validate({
+			rules : {
+				categoryName : "required"
+			},
+			messages : {
+				categoryName : "Please enter category name"		}
+		});
 	
-	function validateFormInput() {
-		const categoryField = document.getElementById("category");
-
-		if (categoryField.value.length == 0) {
-			alert("Category name is required!!");
-			categoryField.focus();
-			return false;
+		$("#buttonCancel").click(function() {
+			history.go(-1);
+		});
+	
+	});
+	
+		
+		function validateFormInput() {
+			const categoryField = document.getElementById("category");
+	
+			if (categoryField.value.length == 0) {
+				alert("Category name is required!!");
+				categoryField.focus();
+				return false;
+			}
 		}
-	}
 </script>
+</body>
 </html>

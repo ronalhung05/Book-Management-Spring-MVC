@@ -65,17 +65,17 @@
 				<tr>
 					<td align="right">Title:</td>
 					<td><input type="text" name="title" id="title" size="20"
-						value=${title}></td>
+						value="${book.title}"></td>
 				</tr>
 				<tr>
 					<td align="right">Author:</td>
 					<td><input type="text" name="author" id="author" size="20"
-						value=${author}></td>
+						value="${book.author}"></td>
 				</tr>
 				<tr>
 					<td align="right">ISBN:</td>
 					<td><input type="text" name="isbn" id="isbn" size="20"
-						value=${book.isbn}></td>
+						value="${book.isbn}"></td>
 				</tr>
 				<tr>
 					<td align="right">Publish Date:</td>
@@ -92,7 +92,7 @@
 				<tr>
 					<td align="right">Price:</td>
 					<td><input type="text" name="price" id="price" size="20"
-						value=${book.price}></td>
+						value="${book.price}"></td>
 				</tr>
 				<tr>
 					<td align="right">Description:</td>
@@ -112,8 +112,7 @@
 		</form>
 	</diV>
 	<jsp:directive.include file="footer.jsp" />
-</body>
-<script type="text/javascript">
+	<script type="text/javascript">
 	// Get a reference to our file input
 	//const fileInput = document.querySelector('input[type="file"]');
 	//fileInput.onchange = () => {
@@ -121,56 +120,58 @@
 	//  console.log(selectedFile);
 	//}
 
-	$(document).ready(function() {
-
-
-		$('#publishDate').datepicker();
-		$('#description').richText();
+		$(document).ready(function() {
+	
+	
+			$('#publishDate').datepicker();
+			$('#description').richText();
+			
+			$('#bookImage').change(function() {
+				showImageThumbnail(this);
+			});
+			$("#bookForm").validate({
+				rules : {
+					category : "required",
+					title : "required",
+					author : "required",
+					isbn : "required",
+					publishDate : "required",
+					//bookImage : "required",
+					price : "required",
+					description : "required"
+				},
+	
+				messages : {
+					category : "Please enter book category",
+					title : "Please enter book title",
+					author : "Please enter author's name",
+					isbn : "Please enter isbn number",
+					publishDate : "Please enter publish date",
+					//bookImage : "Please choose the book image",
+					price : "Please enter the book price",
+					description : "Please enter book description"
+				}
+			});
+	
+			$("#buttonCancel").click(function() {
+				history.go(-1);
+			});
+	
+		});
+	
+		function showImageThumbnail(fileInput) {
+			let file = fileInput.files[0];
+	
+			let reader = new FileReader();
+	
+			reader.onload = function(e) {
+				$('#thumbnail').attr('src', e.target.result);
+			};
+	
+			reader.readAsDataURL(file);
+		}
+	</script>
+	
 		
-		$('#bookImage').change(function() {
-			showImageThumbnail(this);
-		});
-		$("#bookForm").validate({
-			rules : {
-				category : "required",
-				title : "required",
-				author : "required",
-				isbn : "required",
-				publishDate : "required",
-				//bookImage : "required",
-				price : "required",
-				description : "required"
-			},
-
-			messages : {
-				category : "Please enter book category",
-				title : "Please enter book title",
-				author : "Please enter author's name",
-				isbn : "Please enter isbn number",
-				publishDate : "Please enter publish date",
-				//bookImage : "Please choose the book image",
-				price : "Please enter the book price",
-				description : "Please enter book description"
-			}
-		});
-
-		$("#buttonCancel").click(function() {
-			history.go(-1);
-		});
-
-	});
-
-	function showImageThumbnail(fileInput) {
-		let file = fileInput.files[0];
-
-		let reader = new FileReader();
-
-		reader.onload = function(e) {
-			$('#thumbnail').attr('src', e.target.result);
-		};
-
-		reader.readAsDataURL(file);
-	}
-</script>
-
+</body>
 </html>

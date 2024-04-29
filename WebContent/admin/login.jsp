@@ -1,10 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<meta charset="ISO-8859-1">
+	<title>Admin Login</title>
 	<link rel = "stylesheet" href = "../css/style.css">
 	<script type="text/javascript" src="../js/jquery-3.7.1.min.js"></script>
 	<script type="text/javascript" src="../js/jquery.validate.min.js"></script>
@@ -14,6 +16,11 @@
 		<h1>Book Store Administration</h1>
 		<h2>Admin Login</h2>
 		
+		<c:if test = "${message != null}">
+			<div align = "center">
+				<h4 class = "message">${message}</h4>
+			</div>
+		</c:if>
 		<form id = "loginForm" action = "login" method = "post">
 			<table>
 				<tr>
@@ -37,12 +44,18 @@
 	$(document).ready(function() {
 		$("#loginForm").validate({
 			rules : {
-				email : "required",
+				email: {
+					required: true,
+					email: true
+				},
 				password : "required",
 			},
 
 			messages : {
-				email : "Please enter email address",
+				email: {
+					required: "Please enter email",
+					email: "Please en an valid email address"
+				},
 				password : "Please enter password"
 			}
 		});
