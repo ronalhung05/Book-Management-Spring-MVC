@@ -17,7 +17,7 @@ public class UserServices {
 	private HttpServletResponse response;
 
 	public UserServices(HttpServletRequest request, HttpServletResponse response) {
-		userDAO = new UserDAO();
+		this.userDAO = new UserDAO();
 		this.request = request;
 		this.response = response;
 	}
