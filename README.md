@@ -2,12 +2,12 @@
 
 | **Modules** | **Giao cho** | **Hoàn thành** |
 |:-----------:|:------------:|:--------------:|
-|    User     |     Phát     |     - [ ]      |
-|  Category   |     Phát     |     - [ ]      |
-|    Book     |     Hùng     |                |
-|  Customer   |     Hùng     |                |
-|   Review    |     Toàn     |                |
-|    Order    |     Toàn     |                |
+|    User     |     Phát     |     :white_check_mark:      |
+|  Category   |     Phát     |     :white_check_mark:    |
+|    Book     |     Hùng     |  :white_check_mark:              |
+|  Customer   |     Hùng     |  :white_check_mark:              |
+|   Review    |     Toàn     |  :white_check_mark:              |
+|    Order    |     Toàn     |  :white_large_square:              |
 
 - (Toàn) (section 42) -> Phần đã giao cho Toàn hồi trước, ránglàm
 
