@@ -189,11 +189,26 @@ public class BookServices {
 	}
 
 	public void deleteBook() throws ServletException, IOException {
-		int bookId = Integer.parseInt(request.getParameter("id"));
-		bookDAO.delete(bookId);
-		
-		String message = "Book has been deleted successfully";
-		listBook(message);
+		Integer bookId = Integer.parseInt(request.getParameter("id"));
+		Book book =  bookDAO.get(bookId);
+
+		if (book == null) {
+			String message = "Could not find book with ID " + bookId
+					+ ", or it might have been deleted";
+			listBook(message);
+
+		} else {
+			if (!book.getReviews().isEmpty()) {
+				String message = "Could not delete the book with ID " + bookId
+						+ " because it has reviews";
+				listBook(message);
+			} else {
+				String message = "The book has been deleted successfully.";
+				bookDAO.delete(bookId);
+				listBook(message);
+			}
+		}
+
 	}
 
 	public void listBookByCategory() throws ServletException, IOException {
