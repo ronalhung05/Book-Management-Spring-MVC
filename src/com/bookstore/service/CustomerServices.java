@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.bookstore.dao.CustomerDAO;
+import com.bookstore.dao.OrderDAO;
 import com.bookstore.dao.ReviewDAO;
 import com.bookstore.entity.Customer;
 
@@ -35,7 +36,7 @@ public class CustomerServices {
         String zipcode = request.getParameter("zipcode");
         String country = request.getParameter("country");
 
-        if (email != null && !email.equals("")) {
+        if (email != null && !email.isEmpty()) {
             customer.setEmail(email);
         }
         customer.setFullname(fullName);
@@ -126,14 +127,23 @@ public class CustomerServices {
             ReviewDAO reviewDAO = new ReviewDAO();
             long reviewCount = reviewDAO.countByCustomer(customerId);
 
-            if (reviewCount == 0) {
-                customerDAO.delete(customerId);
-                String message = "The customer has been deleted successfully.";
-                listCustomer(message);
-            } else {
+            if (reviewCount > 0) {
                 String message = "Could not delete customer with ID " + customerId
                         + " because he/she posted reviews for books.";
                 listCustomer(message);
+            } else {
+                OrderDAO orderDAO = new OrderDAO();
+                long orderCount = orderDAO.countByCustomer(customerId);
+
+                if (orderCount > 0) {
+                    String message = "Could not delete customer with ID " + customerId
+                            + " because he/she placed orders.";
+                    listCustomer(message);
+                } else {
+                    customerDAO.delete(customerId);
+                    String message = "The customer has been deleted successfully.";
+                    listCustomer(message);
+                }
             }
         } else {
             String message = "Could not find customer with ID " + customerId + ", "
@@ -141,12 +151,8 @@ public class CustomerServices {
             listCustomer(message);
         }
 
-        customerDAO.delete(customerId);
-
-        String message = "The customer has been deleted successfully.";
-        listCustomer(message);
     }
-
+    
     public void registerCustomer() throws ServletException, IOException {
         String email = request.getParameter("email");
         Customer existCustomer = customerDAO.findByEmail(email);

@@ -1,6 +1,7 @@
 package com.bookstore.controller.admin.book;
 
 import java.io.IOException;
+import java.io.Serial;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,7 @@ import com.bookstore.service.BookServices;
 
 @WebServlet("/admin/new_book")
 public class NewBookServlet extends HttpServlet {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public NewBookServlet() {
