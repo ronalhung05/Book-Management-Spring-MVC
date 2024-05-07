@@ -1,2 +1,5 @@
 /build/
 /target/
+hibernate.cfg.xml
+persistence.xml
+pom.xml
