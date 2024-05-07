@@ -126,7 +126,7 @@ public class OrderDAOTest {
 
     @Test
     public void testGet() {
-        Integer orderId = 22;
+        Integer orderId = 23;
         BookOrder order = orderDAO.get(orderId);
         System.out.println(order.getRecipientName());
         System.out.println(order.getRecipientPhone());
@@ -136,7 +136,7 @@ public class OrderDAOTest {
         System.out.println(order.getPaymentMethod());
 
 
-        assertEquals(2, order.getOrderDetails().size());
+        assertEquals(1, order.getOrderDetails().size());
     }
 
     @Test
@@ -206,13 +206,12 @@ public class OrderDAOTest {
     @Test
     public void testCount() {
         long totalOrders = orderDAO.count();
-        assertEquals(1, totalOrders);
+        assertEquals(2, totalOrders);
     }
 
     @Test
     public void testListMostRecentSales() {
         List<BookOrder> recentOrders = orderDAO.listMostRecentSales();
-
-        assertEquals(3, recentOrders.size());
+        assertEquals(2, recentOrders.size());
     }
 }

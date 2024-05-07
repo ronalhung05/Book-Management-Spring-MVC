@@ -7,6 +7,8 @@ import java.util.List;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 
 import com.bookstore.entity.Book;
 import com.bookstore.entity.Customer;
@@ -16,12 +18,12 @@ public class ReviewDAOTest {
 
     private static ReviewDAO reviewDao;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpBeforeClass() throws Exception {
         reviewDao = new ReviewDAO();
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownAfterClass() throws Exception {
         reviewDao.close();
     }
@@ -33,7 +35,7 @@ public class ReviewDAOTest {
         book.setBookId(35);
 
         Customer customer = new Customer();
-        customer.setCustomerId(13);
+        customer.setCustomerId(29);
 
         review.setBook(book);
         review.setCustomer(customer);
@@ -120,6 +122,13 @@ public class ReviewDAOTest {
 
     @Test
     public void testListMostRecent() {
+        List<Review> recentReviews = reviewDao.listMostRecent();
+
+        assertEquals(3, recentReviews.size());
+    }
+
+    @Test
+    public void testListMostRecentReviews() {
         List<Review> recentReviews = reviewDao.listMostRecent();
 
         assertEquals(3, recentReviews.size());

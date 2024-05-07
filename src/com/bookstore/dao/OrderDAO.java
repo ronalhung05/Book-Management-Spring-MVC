@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.bookstore.entity.Book;
 import com.bookstore.entity.BookOrder;
 
 public class OrderDAO extends JpaDAO<BookOrder> implements GenericDAO<BookOrder> {
@@ -63,6 +64,7 @@ public class OrderDAO extends JpaDAO<BookOrder> implements GenericDAO<BookOrder>
         return super.findWithNamedQuery("BookOrder.findAll", 0, 3);
     }
 
+    
     public long countOrderDetailByBook(int bookId) {
         return super.countWithNamedQuery("OrderDetail.countByBook", "bookId", bookId);
     }

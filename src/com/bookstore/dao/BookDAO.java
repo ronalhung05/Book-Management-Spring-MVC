@@ -1,5 +1,6 @@
 package com.bookstore.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -71,5 +72,22 @@ public class BookDAO extends JpaDAO<Book> implements GenericDAO<Book> {
 	public long countByCategory(int categoryId) {
 		return super.countWithNamedQuery("Book.countByCategory", "catId", categoryId);
 	}
-
+	
+	public List<Book> listBestSellingBooks(){
+    	return super.findWithNamedQuery("OrderDetail.bestSelling",0,4);
+    }
+	
+	public List<Book> listMostFavoredBooks(){
+		List<Book> mostFavoredBooks = new ArrayList<>();
+		
+		List<Object[]> result = super.findWithNamedQueryObjects("Review.mostFavoredBooks",0,4);
+		
+		if(!result.isEmpty()) {
+			for(Object[] elements : result) {
+				Book book = (Book)elements[0];
+				mostFavoredBooks.add(book);
+			}
+		}
+    	return mostFavoredBooks;
+    }
 }
