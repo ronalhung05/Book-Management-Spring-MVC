@@ -1,7 +1,11 @@
 package com.bookstore.service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,25 +32,31 @@ public class CustomerServices {
 
     private void updateCustomerFieldsFromForm(Customer customer) {
         String email = request.getParameter("email");
-        String fullName = request.getParameter("fullName");
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
         String password = request.getParameter("password");
         String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
+        String addressLine1 = request.getParameter("address1");
+        String addressLine2 = request.getParameter("address2");
         String city = request.getParameter("city");
+        String state = request.getParameter("state");
         String zipcode = request.getParameter("zipcode");
         String country = request.getParameter("country");
 
         if (email != null && !email.isEmpty()) {
             customer.setEmail(email);
         }
-        customer.setFullname(fullName);
+        customer.setFirstname(firstname);
+        customer.setLastname(lastname);
 
         if (password != null && !password.equals("")) {
             customer.setPassword(password);
         }
         customer.setPhone(phone);
-        customer.setAddress(address);
+        customer.setAddressLine1(addressLine1);
+        customer.setAddressLine2(addressLine2);
         customer.setCity(city);
+        customer.setState(state);
         customer.setZipcode(zipcode);
         customer.setCountry(country);
     }
@@ -89,7 +99,10 @@ public class CustomerServices {
     public void editCustomer() throws ServletException, IOException {
         Integer customerId = Integer.parseInt(request.getParameter("id"));
         Customer customer = customerDAO.get(customerId);
+        
         request.setAttribute("customer", customer);
+        
+        CommonUtility.generateContryList(request);
 
         String editPage = "customer_form.jsp";
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(editPage);
@@ -214,7 +227,8 @@ public class CustomerServices {
     }
 
     public void showCustomerProfileEditForm() throws ServletException, IOException {
-        String editPage = "frontend/edit_profile.jsp";
+    	CommonUtility.generateContryList(request);
+    	String editPage = "frontend/edit_profile.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(editPage);
         dispatcher.forward(request, response);
     }
@@ -225,4 +239,18 @@ public class CustomerServices {
         customerDAO.update(customer);
         showCustomerProfile();
     }
+
+	public void newCustomer() throws ServletException, IOException {
+		CommonUtility.generateContryList(request);
+		
+		String customerForm = "customer_form.jsp";
+		request.getRequestDispatcher(customerForm).forward(request, response);
+	}
+	
+	public void ShowCustomerRegistrationForm() throws ServletException, IOException {
+		CommonUtility.generateContryList(request);
+		String registerForm = "frontend/register_form.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(registerForm);
+		dispatcher.forward(request,response);
+	}
 }

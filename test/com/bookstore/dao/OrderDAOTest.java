@@ -37,9 +37,16 @@ public class OrderDAOTest {
         customer.setCustomerId(1);
 
         order.setCustomer(customer);
-        order.setRecipientName("Nam Ha Minh");
-        order.setRecipientPhone("123456789");
-        order.setShippingAddress("123 South Street, New York, USA");
+        order.setFirstname("Nam");
+        order.setLastname("Ha Minh");
+        order.setPhone("123456789");
+        order.setAddressLine1("123 South Street");
+        order.setAddressLine1("Cliffton Park");
+        order.setCity("New York");
+        order.setState("New York");
+        order.setCountry("US");
+        order.setPaymentMethod("paypal");
+        order.setZipcode("12345");
 
         Set<OrderDetail> orderDetails = new HashSet<>();
         OrderDetail orderDetail1 = new OrderDetail();
@@ -62,6 +69,9 @@ public class OrderDAOTest {
         orderDetails.add(orderDetail2);
 
         order.setOrderDetails(orderDetails);
+        order.setTax(6.5f);
+        order.setShippingFee(1.0f);
+        order.setTotal(76.8f);
 
         orderDAO.create(order);
 
@@ -74,13 +84,13 @@ public class OrderDAOTest {
     public void testUpdateBookOrderShippingAddress() {
         Integer orderId = 22;
         BookOrder order = orderDAO.get(orderId);
-        order.setShippingAddress("New Shipping Address");
+        order.setAddressLine1("New Shipping Address");
 
         orderDAO.update(order);
 
         BookOrder updatedOrder = orderDAO.get(orderId);
 
-        assertEquals(order.getShippingAddress(), updatedOrder.getShippingAddress());
+        assertEquals(order.getAddressLine1(), updatedOrder.getAddressLine1());
 
     }
 
@@ -128,9 +138,10 @@ public class OrderDAOTest {
     public void testGet() {
         Integer orderId = 23;
         BookOrder order = orderDAO.get(orderId);
-        System.out.println(order.getRecipientName());
-        System.out.println(order.getRecipientPhone());
-        System.out.println(order.getShippingAddress());
+        System.out.println(order.getFirstname());
+        System.out.println(order.getPhone());
+        System.out.println(order.getAddressLine1());
+        System.out.println(order.getAddressLine2());
         System.out.println(order.getStatus());
         System.out.println(order.getTotal());
         System.out.println(order.getPaymentMethod());
@@ -174,7 +185,7 @@ public class OrderDAOTest {
         List<BookOrder> listOrders = orderDAO.listAll();
 
         for (BookOrder order : listOrders) {
-            System.out.println(order.getOrderId() + " - " + order.getCustomer().getFullname()
+            System.out.println(order.getOrderId() + " - " + order.getCustomer().getFirstname()
                     + " - " + order.getTotal() + " - " + order.getStatus());
             for (OrderDetail detail : order.getOrderDetails()) {
                 Book book = detail.getBook();

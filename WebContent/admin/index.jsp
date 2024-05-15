@@ -23,7 +23,8 @@
     <a href="new_book">New Book</a> &nbsp; 
     <a href="user_form.jsp">New User</a> &nbsp; 
     <a href="create_category">New Category</a> &nbsp; 
-    <a href="create_customer">New Customer</a> &nbsp;
+    <!-- <a href="create_customer">New Customer</a> &nbsp; -->
+    <a href="new_customer">New Customer</a> &nbsp;
     </b>
     <hr width="60%"/>
 </div>

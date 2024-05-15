@@ -3,6 +3,7 @@ package com.bookstore.entity;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -42,12 +43,26 @@ public class BookOrder implements java.io.Serializable {
 	private Integer orderId;
 	private Customer customer;
 	private Date orderDate;
-	private String shippingAddress;
-	private String recipientName;
-	private String recipientPhone;
+	private String addressLine1;
+	private String addressLine2;
+	private String firstname;
+	private String lastname;
+	private String phone;
+	private String city;
+	private String state;
+	private String zipcode;
+	private String country;
 	private String paymentMethod;
+	
 	private float total;
+	private float subtotal;
+	private float tax;
+	private float shippingFee;
+	
 	private String status;
+	
+	
+
 	private Set<OrderDetail> orderDetails = new HashSet<OrderDetail>(0);
 
 	public BookOrder() {
@@ -57,21 +72,22 @@ public class BookOrder implements java.io.Serializable {
 			String recipientPhone, String paymentMethod, float total, String status) {
 		this.customer = customer;
 		this.orderDate = orderDate;
-		this.shippingAddress = shippingAddress;
-		this.recipientName = recipientName;
-		this.recipientPhone = recipientPhone;
+		this.addressLine1 = shippingAddress;
+		this.firstname = recipientName;
+		this.phone = recipientPhone;
 		this.paymentMethod = paymentMethod;
 		this.total = total;
 		this.status = status;
 	}
 
+
 	public BookOrder(Customer customer, Date orderDate, String shippingAddress, String recipientName,
 			String recipientPhone, String paymentMethod, float total, String status, Set<OrderDetail> orderDetails) {
 		this.customer = customer;
 		this.orderDate = orderDate;
-		this.shippingAddress = shippingAddress;
-		this.recipientName = recipientName;
-		this.recipientPhone = recipientPhone;
+		this.addressLine1 = shippingAddress;
+		this.firstname = recipientName;
+		this.phone = recipientPhone;
 		this.paymentMethod = paymentMethod;
 		this.total = total;
 		this.status = status;
@@ -110,31 +126,65 @@ public class BookOrder implements java.io.Serializable {
 		this.orderDate = orderDate;
 	}
 
-	@Column(name = "shipping_address", nullable = false, length = 256)
-	public String getShippingAddress() {
-		return this.shippingAddress;
+	@Column(name = "r_address_line1", nullable = false, length = 256)
+	public String getAddressLine1() {
+		return this.addressLine1;
 	}
 
-	public void setShippingAddress(String shippingAddress) {
-		this.shippingAddress = shippingAddress;
+	public void setAddressLine1(String addressLine1) {
+		this.addressLine1 = addressLine1;
 	}
 
-	@Column(name = "recipient_name", nullable = false, length = 30)
-	public String getRecipientName() {
-		return this.recipientName;
+	@Column(name = "r_address_line2", nullable = false, length = 256)
+	public String getAddressLine2() {
+		return addressLine2;
 	}
 
-	public void setRecipientName(String recipientName) {
-		this.recipientName = recipientName;
+	public void setAddressLine2(String addressLine2) {
+		this.addressLine2 = addressLine2;
+	}
+	
+	
+	@Column(name = "r_firstname", nullable = false, length = 30)
+	public String getFirstname() {
+		return firstname;
 	}
 
-	@Column(name = "recipient_phone", nullable = false, length = 15)
-	public String getRecipientPhone() {
-		return this.recipientPhone;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+	
+	@Column(name = "r_lastname", nullable = false, length = 30)
+	public String getLastname() {
+		return lastname;
 	}
 
-	public void setRecipientPhone(String recipientPhone) {
-		this.recipientPhone = recipientPhone;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+	
+	@Column(name = "r_phone", nullable = false, length = 15)
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	@Column(name = "r_country", nullable = false, length = 4)
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	@SuppressWarnings("deprecation")
+	@Transient
+	public String getCountryName() {
+		return new Locale("", this.country).getDisplayCountry();
 	}
 
 	@Column(name = "payment_method", nullable = false, length = 20)
@@ -163,7 +213,62 @@ public class BookOrder implements java.io.Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	@Column(name = "r_city", nullable = false, length = 32)
+	public String getCity() {
+		return city;
+	}
 
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	@Column(name = "r_state", nullable = false, length = 45)
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	@Column(name = "r_zipcode", nullable = false, length = 24)
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+
+	
+	@Column(name = "subtotal", nullable = false, precision = 12, scale = 0)
+	public float getSubtotal() {
+		return subtotal;
+	}
+
+	public void setSubtotal(float subtotal) {
+		this.subtotal = subtotal;
+	}
+
+	@Column(name = "tax", nullable = false, precision = 12, scale = 0)
+	public float getTax() {
+		return tax;
+	}
+
+	public void setTax(float tax) {
+		this.tax = tax;
+	}
+
+	@Column(name = "shipping_fee", nullable = false, precision = 12, scale = 0)
+	public float getShippingFee() {
+		return shippingFee;
+	}
+
+	public void setShippingFee(float shippingFee) {
+		this.shippingFee = shippingFee;
+	}
+	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "bookOrder", cascade = CascadeType.ALL, orphanRemoval = true)
 	public Set<OrderDetail> getOrderDetails() {
 		return this.orderDetails;

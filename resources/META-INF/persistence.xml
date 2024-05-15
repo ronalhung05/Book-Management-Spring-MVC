@@ -14,9 +14,9 @@
 			<property name="javax.persistence.jdbc.url"
 				value="jdbc:mysql://localhost/bookstoredb?useSSL=false" />
 			<property name="javax.persistence.jdbc.user"
-				value="root" />
+				value="root"/>
 			<property name="javax.persistence.jdbc.password"
-				value="31102003" />
+				value="123456"/>
 			<property name="javax.persistence.jdbc.driver"
 				value="com.mysql.jdbc.Driver" />
 			<property name="hibernate.show_sql" value="true" />
