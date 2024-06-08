@@ -41,8 +41,10 @@ public class BookServices {
         listBook(null);
     }
 
+    //nếu muốn thông báo ra message
     public void listBook(String message) throws ServletException, IOException {
         List<Book> listBook = bookDAO.listAll();
+        //lưu danh sách book gửi qua jsp book_list
         request.setAttribute("listBook", listBook);
         if (message != null) {
             request.setAttribute("message", message);
@@ -97,7 +99,7 @@ public class BookServices {
         float price = Float.parseFloat(request.getParameter("price"));
         String description = request.getParameter("description");
 
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
         Date publishDate = null;
 
@@ -105,7 +107,7 @@ public class BookServices {
             publishDate = dateFormat.parse(request.getParameter("publishDate"));
         } catch (ParseException ex) {
             ex.printStackTrace();
-            throw new ServletException("Error parsing publish date (format is MM/dd/yyyy)");
+            throw new ServletException("Error parsing publish date (format is dd/MM/yyyy)");
         }
 
 

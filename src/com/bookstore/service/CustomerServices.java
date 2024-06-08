@@ -49,7 +49,7 @@ public class CustomerServices {
         customer.setFirstname(firstname);
         customer.setLastname(lastname);
 
-        if (password != null && !password.equals("")) {
+        if (password != null && !password.isEmpty()) {
             customer.setPassword(password);
         }
         customer.setPhone(phone);
@@ -99,9 +99,9 @@ public class CustomerServices {
     public void editCustomer() throws ServletException, IOException {
         Integer customerId = Integer.parseInt(request.getParameter("id"));
         Customer customer = customerDAO.get(customerId);
-        
+
         request.setAttribute("customer", customer);
-        
+
         CommonUtility.generateContryList(request);
 
         String editPage = "customer_form.jsp";
@@ -165,7 +165,7 @@ public class CustomerServices {
         }
 
     }
-    
+
     public void registerCustomer() throws ServletException, IOException {
         String email = request.getParameter("email");
         Customer existCustomer = customerDAO.findByEmail(email);
@@ -227,8 +227,8 @@ public class CustomerServices {
     }
 
     public void showCustomerProfileEditForm() throws ServletException, IOException {
-    	CommonUtility.generateContryList(request);
-    	String editPage = "frontend/edit_profile.jsp";
+        CommonUtility.generateContryList(request);
+        String editPage = "frontend/edit_profile.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(editPage);
         dispatcher.forward(request, response);
     }
@@ -240,17 +240,17 @@ public class CustomerServices {
         showCustomerProfile();
     }
 
-	public void newCustomer() throws ServletException, IOException {
-		CommonUtility.generateContryList(request);
-		
-		String customerForm = "customer_form.jsp";
-		request.getRequestDispatcher(customerForm).forward(request, response);
-	}
-	
-	public void ShowCustomerRegistrationForm() throws ServletException, IOException {
-		CommonUtility.generateContryList(request);
-		String registerForm = "frontend/register_form.jsp";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(registerForm);
-		dispatcher.forward(request,response);
-	}
+    public void newCustomer() throws ServletException, IOException {
+        CommonUtility.generateContryList(request);
+
+        String customerForm = "customer_form.jsp";
+        request.getRequestDispatcher(customerForm).forward(request, response);
+    }
+
+    public void ShowCustomerRegistrationForm() throws ServletException, IOException {
+        CommonUtility.generateContryList(request);
+        String registerForm = "frontend/register_form.jsp";
+        RequestDispatcher dispatcher = request.getRequestDispatcher(registerForm);
+        dispatcher.forward(request, response);
+    }
 }
