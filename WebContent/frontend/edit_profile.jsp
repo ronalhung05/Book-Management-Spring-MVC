@@ -74,7 +74,7 @@
         <div class="form-group row">
             <label class="col-sm-4 col-form-label">Zip Code:</label>
             <div class="col-sm-8">
-                <input type="text" name="zipCode" class="form-control" value="${loggedCustomer.zipcode}" required
+                <input type="text" name="zipcode" class="form-control" value="${loggedCustomer.zipcode}" required
                        minlength="3" maxlength="24"/>
             </div>
         </div>

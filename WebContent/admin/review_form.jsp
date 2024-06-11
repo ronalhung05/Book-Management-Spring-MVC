@@ -1,83 +1,70 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Create New Review - Evergreen Bookstore Administration</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <script type="text/javascript" src="../js/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+	<jsp:include page="page_head.jsp">
+		<jsp:param name="pageTitle" value="Edit Review" />
+	</jsp:include>
 </head>
 <body>
-<jsp:directive.include file="header.jsp"/>
+<div class="container">
+	<jsp:directive.include file="header.jsp" />
+	
+	<div class="row m-3">
+		<div class="col text-center">
+			<h2>Edit Review</h2>
+		</div>
+	</div>
+	
+	<form action="update_review" method="post" style="max-width: 700px; margin: 0 auto;">
+		<input type="hidden" name="reviewId" value="${review.reviewId}">
 
+		<div class="form-group row">
+			<label class="col-sm-4 col-form-label">Book:</label>
+			<div class="col-sm-8">
+				<b>${review.book.title}</b>
+			</div>
+		</div>
+	
+		<div class="form-group row">
+			<label class="col-sm-4 col-form-label">Rating:</label>
+			<div class="col-sm-8">
+				<b>${review.rating}</b>
+			</div>
+		</div>
 
-<diV align="center">
-    <h2>Edit Review</h2>
-</diV>
+		<div class="form-group row">
+			<label class="col-sm-4 col-form-label">Customer:</label>
+			<div class="col-sm-8">
+				<b>${review.customer.fullname}</b>
+			</div>
+		</div>
 
-<diV align="center">
-    <form id="reviewForm" action="update_review" method="post">
-        <input type="hidden" name="reviewId" value="${review.reviewId}"/>
+		<div class="form-group row">
+			<label class="col-sm-4 col-form-label">Headline:</label>
+			<div class="col-sm-8">
+				<input type="text" size="60" name="headline" value="${review.headline}" class="form-control" required minlength="10" maxlength="128" />
+			</div>
+		</div>
+				
+		<div class="form-group row">
+			<label class="col-sm-4 col-form-label">Comment:</label>
+			<div class="col-sm-8">
+				<textarea rows="5" cols="70" name="comment" class="form-control" required>${review.comment}</textarea>
+			</div>
+		</div>
+		
+		<div class="row m-4">
+			<div class="col text-center">
+				<button type="submit" class="btn btn-primary mr-2">Save</button>
+				<button type="button" class="btn btn-secondary ml-2" onclick="history.go(-1);">Cancel</button>
+			</div>
+		</div>			
+	</form>
 
-        <table class="form">
-            <tbody>
-            <tr>
-                <td align="right">Book:</td>
-                <td align="left"><b>${review.book.title}</b></td>
-            </tr>
-            <tr>
-                <td align="right">Rating:</td>
-                <td align="left"><b>${review.rating}</b></td>
-            </tr>
-            <tr>
-                <td align="right">Customer:</td>
-                <td align="left"><b>${review.customer.fullname}</b></td>
-            </tr>
-            <tr>
-                <td align="right">Headline:</td>
-                <td align="left"><input type="text" name="headline"
-                                        size="50" value="${review.headline}"></td>
-            </tr>
-            <tr>
-                <td align="right">Comment:</td>
-                <td align="left">
-                    <textarea rows="5" cols="70" name="comment">${review.comment }</textarea></td>
-            </tr>
-            <tr>
-            <tr>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <button type="submit">Save</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button type="button" onClick="javascript:history.go(-1);">Cancel</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </form>
-</diV>
-<jsp:directive.include file="footer.jsp"/>
+	<jsp:directive.include file="footer.jsp" />
+</div>	
 </body>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#reviewForm").validate({
-            rules: {
-                headline: "required",
-                comment: "required"
-            },
-            messages: {
-                headline: "Please enter headline",
-                comment: "Please enter comment",
-            }
-        });
-
-        $("#buttonCancel").click(function () {
-            history.go(-1);
-        });
-
-    });
-</script>
 </html>
