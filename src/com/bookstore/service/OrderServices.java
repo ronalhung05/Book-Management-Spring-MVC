@@ -152,7 +152,7 @@ public class OrderServices {
         return order;
     }
 
-    public void listOrderByCustomer() throws ServletException, IOException {
+	public void listOrderByCustomer() throws ServletException, IOException {
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("loggedCustomer");
         List<BookOrder> listOrders = orderDao.listByCustomer(customer.getCustomerId());

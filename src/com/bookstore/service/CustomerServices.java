@@ -101,6 +101,8 @@ public class CustomerServices {
         Customer customer = customerDAO.get(customerId);
 
         request.setAttribute("customer", customer);
+        
+        CommonUtility.generateContryList(request);
 
         CommonUtility.generateContryList(request);
 
