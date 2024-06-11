@@ -1,57 +1,63 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Results for ${keyword} - Online Books Store</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
+<jsp:include page="page_head.jsp">
+    <jsp:param name="pageTitle" value="Results for ${keyword}"/>
+</jsp:include>
 <body>
+<body>
+<div class="container">
+    <jsp:directive.include file="header.jsp"/>
 
-<jsp:directive.include file="header.jsp"/>
+    <div>&nbsp;</div>
 
-<div class="center">
-    <c:if test="${fn:length(result) == 0}">
-        <h2>No Results for "${keyword}"</h2>
-    </c:if>
-    <c:if test="${fn:length(result) > 0}">
-        <div class="book_group">
-            <center><h2>Results for "${keyword}":</h2></center>
-            <c:forEach items="${result}" var="book">
-                <div>
-                    <div id="search-image">
-                        <div>
-                            <a href="view_book?id=${book.bookId}">
-                                <img class="book_small" src="data:image/jpg;base64,${book.base64Image}" width="128"/>
-                            </a>
-                        </div>
-                    </div>
-                    <div id="search-description">
-                        <div>
-                            <h2><a href="view_book?id=${book.bookId}"> <b>${book.title}</b></a></h2>
-                        </div>
-                        <div>
-                            <jsp:directive.include file="book_rating.jsp"/>
-                        </div>
-                        <div>
-                            <i>by ${book.author}</i>
-                        </div>
-                        <div>
-                            <p>${fn:substring(book.description, 0, 100)}...</p>
-                        </div>
-                    </div>
-                    <div id="search-price">
-                        <h3>$${book.price}</h3>
-                        <h3><a href="add_to_cart?book_id=${book.bookId}">Add To Cart</a></h3>
-                    </div>
-                </div>
-            </c:forEach>
+    <div class="row">
+        <div class="col text-center">
+            <c:if test="${fn:length(result) == 0}">
+                <h2>No Results for "${keyword}"</h2>
+            </c:if>
+
+            <c:if test="${fn:length(result) > 0}">
+                <h2>Results for "${keyword}"</h2>
+            </c:if>
         </div>
-    </c:if>
-</div>
+    </div>
 
-<jsp:directive.include file="footer.jsp"/>
+
+    <c:forEach items="${result}" var="book">
+        <div class="row">
+            <div class="col-sm-2 text-center">
+                <a href="view_book?id=${book.bookId}">
+                    <img width="128" height="164" src="data:image/jpg;base64,${book.base64Image}"/>
+                </a>
+            </div>
+            <div class="col-sm-8">
+                <div>
+                    <h3><a href="view_book?id=${book.bookId}"> ${book.title}</a></h3>
+                </div>
+                <div>
+                    <jsp:directive.include file="book_rating.jsp"/>
+                </div>
+                <div>
+                    <i>by ${book.author}</i>
+                </div>
+                <div>
+                    <c:set var="shortDescription" value="${fn:substring(book.description, 0, 100)}"/>
+                    <p>${fn:escapeXml(shortDescription)}...</p>
+                </div>
+            </div>
+            <div class="col-sm-2 text-center">
+                <h3>$${book.price}</h3>
+                <h3><a href="add_to_cart?book_id=${book.bookId}" class="btn btn-primary">Add To Cart</a></h3>
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+    </c:forEach>
+
+
+    <jsp:directive.include file="footer.jsp"/>
+</div>
 </body>
 </html>

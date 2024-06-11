@@ -1,80 +1,97 @@
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label">E-mail:</label>
+    <div class="col-sm-8">
+        <input type="email" name="email" class="form-control" value="${customer.email}" required minlength="5"
+               maxlength="64"/>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label">First Name:</label>
+    <div class="col-sm-8">
+        <input type="text" name="firstname" class="form-control" value="${customer.firstname}" required minlength="2"
+               maxlength="30"/>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label">Last Name:</label>
+    <div class="col-sm-8">
+        <input type="text" name="lastname" class="form-control" value="${customer.lastname}" required minlength="2"
+               maxlength="30"/>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label">Password:</label>
+    <div class="col-sm-8">
+        <input type="password" id="password" name="password" class="form-control" value="${customer.password}" required
+               minlength="5" maxlength="16"/>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label">Confirm Password:</label>
+    <div class="col-sm-8">
+        <input type="password" name="confirmPassword" class="form-control"
+               value="${customer.password}" required minlength="5" maxlength="16"
+               oninput="checkPasswordMatch(this)"/>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label">Phone Number:</label>
+    <div class="col-sm-8">
+        <input type="text" name="phone" class="form-control" value="${customer.phone}" required minlength="9"
+               maxlength="15"/>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label">Address Line 1:</label>
+    <div class="col-sm-8">
+        <input type="text" name="address1" class="form-control" value="${customer.addressLine1}" required minlength="10"
+               maxlength="128"/>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label">Address Line 2:</label>
+    <div class="col-sm-8">
+        <input type="text" name="address2" class="form-control" value="${customer.addressLine2}" required
+               maxlength="128"/>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label">City:</label>
+    <div class="col-sm-8">
+        <input type="text" name="city" class="form-control" value="${customer.city}" required minlength="2"
+               maxlength="32"/>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label">State:</label>
+    <div class="col-sm-8">
+        <input type="text" name="state" class="form-control" value="${customer.state}" required minlength="2"
+               maxlength="45"/>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label">Zip Code:</label>
+    <div class="col-sm-8">
+        <input type="text" name="zipCode" class="form-control" value="${customer.zipcode}" required minlength="3"
+               maxlength="24"/>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-4 col-form-label">Country:</label>
+    <div class="col-sm-8">
+        <select name="country" required class="form-control">
+            <c:forEach items="${mapCountries}" var="country">
+                <option value="${country.value}"
+                        <c:if test='${customer.country eq country.value}'>selected='selected'</c:if> >${country.key}</option>
+            </c:forEach>
+        </select>
 
-            <table class="form">
-                <tbody>
-                <tr>
-                    <td align="right">E-mail:</td>
-                    <td align="left"><input type="text" id="email" name="email"
-                                            size="45" value="${customer.email}"></td>
-                </tr>
-                <tr>
-                    <td align="right">First Name:</td>
-                    <td align="left"><input type="text" id="firstname"
-                                            name="firstname" size="45" value="${customer.firstname}"></td>
-                </tr>
-                <tr>
-                    <td align="right">Last Name:</td>
-                    <td align="left"><input type="text" id="lastname"
-                                            name="lastname" size="45" value="${customer.lastname}"></td>
-                </tr>
-                <tr>
-                    <td align="right">Password:</td>
-                    <td align="left"><input type="password" id="password"
-                                            name="password" size="45" value="${customer.password}"></td>
-                </tr>
-                <tr>
-                    <td align="right">Confirm Password:</td>
-                    <td align="left"><input type="password" id="confirmPassword"
-                                            name="confirmPassword" size="45" value="${customer.confirmPassword}"></td>
-                </tr>
-                <tr>
-                    <td align="right">Phone Number:</td>
-                    <td align="left"><input type="text" id="phone" name="phone"
-                                            size="45" value="${customer.phone}"></td>
-                </tr>
-                <tr>
-                    <td align="right">Address Line 1:</td>
-                    <td align="left"><input type="text" id="address1"
-                                            name="address1" size="45" value="${customer.addressLine1}"></td>
-                </tr>
-                <tr>
-                    <td align="right">Address Line 2:</td>
-                    <td align="left"><input type="text" id="address2"
-                                            name="address2" size="45" value="${customer.addressLine2}"></td>
-                </tr>
-                <tr>
-                    <td align="right">City:</td>
-                    <td align="left"><input type="text" id="city" name="city"
-                                            size="45" value="${customer.city}"></td>
-                </tr>
-                 <tr>
-                    <td align="right">State:</td>
-                    <td align="left"><input type="text" id="state" name="state"
-                                            size="45" value="${customer.state}"></td>
-                </tr>
-                <tr>
-                    <td align="right">ZipCode:</td>
-                    <td align="left"><input type="text" id="zipcode"
-                                            name="zipcode" size="45" value="${customer.zipcode}"></td>
-                </tr>
-                <tr>
-                    <td align="right">Country:</td>
-                    <td align="left">
-                    <select name="country" id="country">
-                    	<c:forEach items="${mapCountries}" var="country">
-                    		<option value="${country.value}" <c:if test='${customer.country eq country.value}'>selected = 'selected'</c:if> > ${country.key}</option>
-                    		
-                    	</c:forEach>
-                    </select>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <button type="submit">Save</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="button" value="Cancel" onClick="history.go(-1);"/>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        
+    </div>
+</div>
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col text-center">
+        <button type="submit" class="btn btn-primary mr-3">Save</button>
+        <input type="button" value="Cancel" class="btn btn-secondary" onclick="history.go(-1);"/>
+    </div>
+</div>

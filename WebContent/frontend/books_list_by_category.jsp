@@ -1,48 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Books in ${category.name} - Online Books Store</title>
-
-    <link href="css/style.css" rel="stylesheet" type="text/css"/>
-</head>
+<jsp:include page="page_head.jsp">
+    <jsp:param name="pageTitle" value="Books in ${category.name}"/>
+</jsp:include>
 <body>
+<div class="container">
+    <jsp:directive.include file="header.jsp"/>
 
-<jsp:directive.include file="header.jsp"/>
+    <div class="row">
+        <div class="col text-center"><h2>${category.name}</h2></div>
+    </div>
 
-<div class="center">
-    <h2>${category.name}</h2>
+    <div>&nbsp;</div>
+
+    <div class="row">
+        <c:forEach items="${listBooks}" var="book">
+            <jsp:directive.include file="book_group.jsp"/>
+        </c:forEach>
+    </div>
+
+    <jsp:directive.include file="footer.jsp"/>
 </div>
-
-
-<div class="book_group">
-    <c:forEach items="${listBooks}" var="book">
-        <div class="book">
-            <div>
-                <a href="view_book?id=${book.bookId}">
-                    <img class="book_small" src="data:image/jpg;base64,${book.base64Image}"/>
-                </a>
-            </div>
-
-            <div>
-                <a href="view_book?id=${book.bookId}">
-                    <b>${book.title}</b>
-                </a>
-            </div>
-            <div>
-                <jsp:directive.include file="book_rating.jsp"/>
-            </div>
-            <div>
-            </div>
-            <div><i>by ${book.author}</i></div>
-            <div><b>$${book.price}</b></div>
-        </div>
-    </c:forEach>
-</div>
-
-
-<jsp:directive.include file="footer.jsp"/>
 </body>
 </html>
