@@ -1,15 +1,14 @@
 package com.bookstore.service;
 
-import java.io.IOException;
-import java.util.List;
+import com.bookstore.dao.UserDAO;
+import com.bookstore.entity.Users;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.bookstore.dao.UserDAO;
-import com.bookstore.entity.Users;
+import java.io.IOException;
+import java.util.List;
 
 public class UserServices {
     private UserDAO userDAO;
@@ -23,14 +22,15 @@ public class UserServices {
     }
 
     public void listUser() throws ServletException, IOException {
-        listUser(null);
+        listUser(null, null);
     }
 
-    public void listUser(String message) throws ServletException, IOException {
+    public void listUser(String message, String alertType) throws ServletException, IOException {
         List<Users> listUsers = userDAO.listAll();
         request.setAttribute("listUsers", listUsers);
         if (message != null) {
             request.setAttribute("message", message);
+            request.setAttribute("alertType", alertType);
         }
 
         String listPage = "user_list.jsp";
@@ -47,15 +47,12 @@ public class UserServices {
 
         if (existUser != null) {
             String message = "Could not create user. A user with email: " + email + " already exists";
-            request.setAttribute("message", message);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("message.jsp");
-            requestDispatcher.forward(request, response);
-
+            String alertType = "warning";
+            listUser(message, alertType);
         } else {
-
             Users user = new Users(email, fullName, password);
             userDAO.create(user);
-            listUser("A new user created successfully");
+            listUser("A new user created successfully", "success");
         }
     }
 
@@ -86,10 +83,7 @@ public class UserServices {
 
         if (userByEmail != null && userByEmail.getUserId() != userById.getUserId()) {
             String message = "Could not update user. User with email " + email + " already exists.";
-            request.setAttribute("message", message);
-
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("message.jsp");
-            requestDispatcher.forward(request, response);
+            listUser(message, "warning");
 
         }
 
@@ -99,7 +93,7 @@ public class UserServices {
 
         String message = "User has been updated successfully";
 
-        listUser(message);
+        listUser(message, "success");
 
     }
 
@@ -108,7 +102,7 @@ public class UserServices {
         userDAO.delete(userId);
 
         String message = "User has been deleted successfully";
-        listUser(message);
+        listUser(message, "success");
     }
 
     public void login() throws ServletException, IOException {

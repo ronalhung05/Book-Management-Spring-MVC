@@ -16,26 +16,35 @@
     <div class="row">
         <div class="col text-center">
             <h3>Books Management</h3>
-            <h4><a href="new_book">Create New Book</a></h4>
+            <h4><a href="new_book" class="btn btn-success"><i class="bi bi-plus-lg"></i> Create New Book</a></h4>
         </div>
     </div>
 
     <div class="row">&nbsp;</div>
 
     <c:if test="${message != null}">
-        <div class="row">
-            <div class="col text-center text-success">
-                <h4>${message}</h4>
-            </div>
-        </div>
+        <c:choose>
+            <c:when test="${alertType == 'success'}">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong><i class="fas fa-check-circle"></i> Success!</strong> ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong><i class="fas fa-exclamation-triangle"></i> Warning!</strong> ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </c:otherwise>
+        </c:choose>
     </c:if>
 
-    <div class="row">
-        <table class="table table-bordered table-striped table-hover table-responsive-sm">
+
+    <div class="table-responsive">
+        <table id="bookTable" class="table table-centered table-hover mb-0 text-nowrap table-striped table-bordered">
             <thead class="thead-dark">
             <tr>
                 <th>Index</th>
-                <th>ID</th>
                 <th>Image</th>
                 <th>Title</th>
                 <th>Author</th>
@@ -50,8 +59,6 @@
             <c:forEach var="book" items="${listBook}" varStatus="status">
                 <tr>
                     <td>${status.index + 1}</td>
-                    <td>${book.bookId}</td>
-
                     <td>
                         <img src="data:image/jpg;base64,${book.base64Image}" width="84" height="110"/>
                     </td>
@@ -60,10 +67,12 @@
                     <td>${book.author}</td>
                     <td>${book.category.name}</td>
                     <td>$${book.price}</td>
-                    <td><fmt:formatDate pattern='MM/dd/yyyy' value='${book.lastUpdateTime}'/></td>
+                    <td><fmt:formatDate pattern='dd/MM/yyyy' value='${book.lastUpdateTime}'/></td>
                     <td>
-                        <a href="edit_book?id=${book.bookId}">Edit</a> &nbsp;
-                        <a href="javascript:void(0);" class="deleteLink" id="${book.bookId}">Delete</a>
+                        <a href="edit_book?id=${book.bookId}" class="text-muted"><i class="bi bi-pencil-square"></i>
+                        </a>&nbsp;
+                        <a href="javascript:void(0);" class="deleteLink text-danger" id="${book.bookId}"><i
+                                class="bi bi-trash"></i></a>
                     </td>
                 </tr>
             </c:forEach>
@@ -75,6 +84,7 @@
     <jsp:directive.include file="footer.jsp"/>
 </div>
 <script>
+    new DataTable('#bookTable');
     $(document).ready(function () {
         $(".deleteLink").each(function () {
             $(this).on("click", function () {

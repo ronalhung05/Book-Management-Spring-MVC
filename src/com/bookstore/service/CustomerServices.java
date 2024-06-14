@@ -1,22 +1,17 @@
 package com.bookstore.service;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TreeMap;
+import com.bookstore.dao.CustomerDAO;
+import com.bookstore.dao.OrderDAO;
+import com.bookstore.dao.ReviewDAO;
+import com.bookstore.entity.Customer;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.bookstore.dao.CustomerDAO;
-import com.bookstore.dao.OrderDAO;
-import com.bookstore.dao.ReviewDAO;
-import com.bookstore.entity.Customer;
+import java.io.IOException;
+import java.util.List;
 
 public class CustomerServices {
     CustomerDAO customerDAO = new CustomerDAO();
@@ -63,14 +58,15 @@ public class CustomerServices {
 
     public void listCustomer() throws ServletException, IOException {
 
-        listCustomer(null);
+        listCustomer(null, null);
     }
 
-    public void listCustomer(String message) throws ServletException, IOException {
+    public void listCustomer(String message, String alertType) throws ServletException, IOException {
 
         List<Customer> listCustomer = customerDAO.listAll();
         if (message != null) {
             request.setAttribute("message", message);
+            request.setAttribute("alertType", alertType);
         }
         request.setAttribute("listCustomer", listCustomer);
 
@@ -85,14 +81,16 @@ public class CustomerServices {
 
         if (existCustomer != null) {
             String message = "Could not create customer: the email " + email + " is already registered by another customer.";
-            listCustomer(message);
+            String alertType = "warning";
+            listCustomer(message, alertType);
         } else {
             Customer newCustomer = new Customer();
             updateCustomerFieldsFromForm(newCustomer);
             customerDAO.create(newCustomer);
 
             String message = "New customer has been created successfully";
-            listCustomer(message);
+            String alertType = "success";
+            listCustomer(message, alertType);
         }
     }
 
@@ -101,7 +99,7 @@ public class CustomerServices {
         Customer customer = customerDAO.get(customerId);
 
         request.setAttribute("customer", customer);
-        
+
         CommonUtility.generateContryList(request);
 
         CommonUtility.generateContryList(request);
@@ -118,26 +116,28 @@ public class CustomerServices {
         String email = request.getParameter("email");
 
         Customer customerByEmail = customerDAO.findByEmail(email);
-        String message = null;
-
+        String message;
+        String alertType;
         if (customerByEmail != null && customerByEmail.getCustomerId() != customerId) {
             message = "Could not update the customer ID " + customerId +
                     " because there's an existing customer having the same email.";
+            alertType = "warning";
         } else {
             Customer customerById = customerDAO.get(customerId);
             updateCustomerFieldsFromForm(customerById);
 
             customerDAO.update(customerById);
             message = "The customer has been updated successfully.";
+            alertType = "success";
 
         }
-        listCustomer(message);
+        listCustomer(message, alertType);
     }
 
     public void deleteCustomer() throws ServletException, IOException {
         Integer customerId = Integer.parseInt(request.getParameter("id"));
         Customer customer = customerDAO.get(customerId);
-
+        String alertType;
         if (customer != null) {
             ReviewDAO reviewDAO = new ReviewDAO();
             long reviewCount = reviewDAO.countByCustomer(customerId);
@@ -145,7 +145,8 @@ public class CustomerServices {
             if (reviewCount > 0) {
                 String message = "Could not delete customer with ID " + customerId
                         + " because he/she posted reviews for books.";
-                listCustomer(message);
+                alertType = "warning";
+                listCustomer(message, alertType);
             } else {
                 OrderDAO orderDAO = new OrderDAO();
                 long orderCount = orderDAO.countByCustomer(customerId);
@@ -153,17 +154,20 @@ public class CustomerServices {
                 if (orderCount > 0) {
                     String message = "Could not delete customer with ID " + customerId
                             + " because he/she placed orders.";
-                    listCustomer(message);
+                    alertType = "warning";
+                    listCustomer(message, alertType);
                 } else {
                     customerDAO.delete(customerId);
                     String message = "The customer has been deleted successfully.";
-                    listCustomer(message);
+                    alertType = "success";
+                    listCustomer(message, alertType);
                 }
             }
         } else {
             String message = "Could not find customer with ID " + customerId + ", "
                     + "or it has been deleted by another admin";
-            listCustomer(message);
+            alertType = "warning";
+            listCustomer(message, alertType);
         }
 
     }

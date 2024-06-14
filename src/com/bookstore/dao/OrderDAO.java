@@ -1,14 +1,13 @@
 package com.bookstore.dao;
 
+import com.bookstore.entity.BookOrder;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.bookstore.entity.Book;
-import com.bookstore.entity.BookOrder;
 
 public class OrderDAO extends JpaDAO<BookOrder> implements GenericDAO<BookOrder> {
 
@@ -77,6 +76,20 @@ public class OrderDAO extends JpaDAO<BookOrder> implements GenericDAO<BookOrder>
 
     public double totalOrder() {
         double sum = sumWithNamedQuery("BookOrder.sumTotal");
+        BigDecimal bd = new BigDecimal(Double.toString(sum));
+        bd = bd.setScale(2, RoundingMode.HALF_UP); // Làm tròn đến 2 chữ số thập phân
+        return bd.doubleValue();
+    }
+
+    public double totalTax() {
+        double sum = sumWithNamedQuery("BookOrder.sumTax");
+        BigDecimal bd = new BigDecimal(Double.toString(sum));
+        bd = bd.setScale(2, RoundingMode.HALF_UP); // Làm tròn đến 2 chữ số thập phân
+        return bd.doubleValue();
+    }
+
+    public double totalShippingFee() {
+        double sum = sumWithNamedQuery("BookOrder.sumShippingFee");
         BigDecimal bd = new BigDecimal(Double.toString(sum));
         bd = bd.setScale(2, RoundingMode.HALF_UP); // Làm tròn đến 2 chữ số thập phân
         return bd.doubleValue();

@@ -1,7 +1,8 @@
 package com.bookstore.controller.admin;
 
-import java.io.IOException;
-import java.util.List;
+import com.bookstore.dao.*;
+import com.bookstore.entity.BookOrder;
+import com.bookstore.entity.Review;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,14 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.bookstore.dao.BookDAO;
-import com.bookstore.dao.CustomerDAO;
-import com.bookstore.dao.OrderDAO;
-import com.bookstore.dao.ReviewDAO;
-import com.bookstore.dao.UserDAO;
-import com.bookstore.entity.BookOrder;
-import com.bookstore.entity.Review;
+import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/admin/")
 public class AdminHomeServlet extends HttpServlet {
@@ -49,6 +44,8 @@ public class AdminHomeServlet extends HttpServlet {
         long totalReviews = reviewDao.count();
         long totalOrders = orderDao.count();
         double earnings = orderDao.totalOrder();
+        double tax = orderDao.totalTax();
+        double shippingFee = orderDao.totalShippingFee();
 
 
         request.setAttribute("listMostRecentSales", listMostRecentSales);
@@ -60,6 +57,8 @@ public class AdminHomeServlet extends HttpServlet {
         request.setAttribute("totalReviews", totalReviews);
         request.setAttribute("totalOrders", totalOrders);
         request.setAttribute("earnings", earnings);
+        request.setAttribute("tax", tax);
+        request.setAttribute("shippingFee", shippingFee);
 
         String homepage = "index.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(homepage);
