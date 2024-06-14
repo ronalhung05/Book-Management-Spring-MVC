@@ -30,14 +30,15 @@ public class OrderServices {
     }
 
     public void listAllOrder() throws ServletException, IOException {
-        listAllOrder(null);
+        listAllOrder(null, null);
     }
 
-    public void listAllOrder(String message) throws ServletException, IOException {
+    public void listAllOrder(String message, String alertType) throws ServletException, IOException {
         List<BookOrder> listOrder = orderDao.listAll();
 
         if (message != null) {
             request.setAttribute("message", message);
+            request.setAttribute("alertType", alertType);
         }
 
         request.setAttribute("listOrder", listOrder);
@@ -60,7 +61,8 @@ public class OrderServices {
             dispatcher.forward(request, response);
         } else {
             String message = "Could not find order with ID " + orderId;
-            listAllOrder(message);
+            String alertType = "warning";
+            listAllOrder(message, alertType);
         }
     }
 
@@ -152,7 +154,7 @@ public class OrderServices {
         return order;
     }
 
-	public void listOrderByCustomer() throws ServletException, IOException {
+    public void listOrderByCustomer() throws ServletException, IOException {
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("loggedCustomer");
         List<BookOrder> listOrders = orderDao.listByCustomer(customer.getCustomerId());
@@ -181,10 +183,12 @@ public class OrderServices {
     public void showEditOrderForm() throws ServletException, IOException {
         Integer orderId = Integer.parseInt(request.getParameter("id"));
         BookOrder order = orderDao.get(orderId);
+        String alertType;
 
         if (order == null) {
             String message = "Could not find order with ID " + orderId;
-            listAllOrder(message);
+            alertType = "warning";
+            listAllOrder(message, alertType);
             return;
         }
         HttpSession session = request.getSession();
@@ -275,7 +279,8 @@ public class OrderServices {
         orderDao.update(order);
 
         String message = "The order " + order.getOrderId() + " has been updated successfully";
-        listAllOrder(message);
+        String alertType = "success";
+        listAllOrder(message, alertType);
     }
 
     public void deleteOrder() throws ServletException, IOException {
@@ -287,11 +292,13 @@ public class OrderServices {
             orderDao.delete(orderId);
 
             String message = "The order ID " + orderId + " has been deleted.";
-            listAllOrder(message);
+            String alertType = "success";
+            listAllOrder(message, alertType);
         } else {
             String message = "Could not find order with ID " + orderId +
                     ", or it might have been deleted by another admin.";
-            listAllOrder(message);
+            String alertType = "warning";
+            listAllOrder(message, alertType);
         }
     }
 

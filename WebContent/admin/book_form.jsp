@@ -20,116 +20,112 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="..//css/richtext.min.css">
+    <link rel="stylesheet" href="../css/richtext.min.css">
     <script type="text/javascript" src="../js/jquery.richtext.min.js"></script>
 </head>
 <body>
-<div class="container">
-    <jsp:directive.include file="header.jsp"/>
+<div class="container mt-4">
+    <jsp:include page="header.jsp"/>
 
-    <div class="row m-3">
+    <div class="row mb-4">
         <div class="col text-center">
             <h2><c:out value="${book != null ? 'Edit Book' : 'Create New Book'}"/></h2>
         </div>
     </div>
 
     <c:if test="${book != null}">
-    <form action="update_book" method="post" enctype="multipart/form-data">
+    <form action="update_book" method="post" enctype="multipart/form-data" style="max-width: 600px; margin: 0 auto;">
         <input type="hidden" name="bookId" value="${book.bookId}">
         </c:if>
         <c:if test="${book == null}">
-        <form action="create_book" method="post" enctype="multipart/form-data">
+        <form action="create_book" method="post" enctype="multipart/form-data"
+              style="max-width: 600px; margin: 0 auto;">
             </c:if>
 
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Category:</label>
+            <div class="form-group row mb-3">
+                <label class="col-sm-4 col-form-label" for="category">Category:</label>
                 <div class="col-sm-8">
-                    <select name="category" class="form-control" required>
+                    <select name="category" id="category" class="form-control" required>
                         <c:forEach items="${listCategory}" var="category">
                             <c:if test="${category.categoryId eq book.category.categoryId}">
-                                <option value="${category.categoryId}" selected>
+                                <option value="${category.categoryId}" selected>${category.name}</option>
                             </c:if>
                             <c:if test="${category.categoryId ne book.category.categoryId}">
-                                <option value="${category.categoryId}">
+                                <option value="${category.categoryId}">${category.name}</option>
                             </c:if>
-                            ${category.name}
-                            </option>
                         </c:forEach>
                     </select>
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Title:</label>
+            <div class="form-group row mb-3">
+                <label class="col-sm-4 col-form-label" for="title">Title:</label>
                 <div class="col-sm-8">
-                    <input type="text" name="title" size="20" value="${book.title}" class="form-control" required/>
+                    <input type="text" name="title" id="title" value="${book.title}" class="form-control" required/>
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Author:</label>
+            <div class="form-group row mb-3">
+                <label class="col-sm-4 col-form-label" for="author">Author:</label>
                 <div class="col-sm-8">
-                    <input type="text" name="author" size="20" value="${book.author}" class="form-control" required/>
+                    <input type="text" name="author" id="author" value="${book.author}" class="form-control" required/>
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">ISBN:</label>
+            <div class="form-group row mb-3">
+                <label class="col-sm-4 col-form-label" for="isbn">ISBN:</label>
                 <div class="col-sm-8">
-                    <input type="text" name="isbn" size="20" value="${book.isbn}" class="form-control" required/>
+                    <input type="text" name="isbn" id="isbn" value="${book.isbn}" class="form-control" required/>
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Publish Date:</label>
+            <div class="form-group row mb-3">
+                <label class="col-sm-4 col-form-label" for="publishDate">Publish Date:</label>
                 <div class="col-sm-8">
-                    <input type="date" name="publishDate" size="20" required class="form-control"
+                    <input type="date" name="publishDate" id="publishDate" class="form-control" required
                            value="<fmt:formatDate pattern='yyyy-MM-dd' value='${book.publishDate}' />"/>
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Book Image:</label>
+            <div class="form-group row mb-3">
+                <label class="col-sm-4 col-form-label" for="bookImage">Book Image:</label>
                 <div class="col-sm-8">
                     <c:if test="${book == null}">
-                        <input type="file" id="bookImage" name="bookImage" size="20" required/><br/>
+                        <input type="file" id="bookImage" name="bookImage" class="form-control" required/><br/>
                     </c:if>
-
                     <c:if test="${book != null}">
-                        <input type="file" id="bookImage" name="bookImage" size="20"/><br/>
+                        <input type="file" id="bookImage" name="bookImage" class="form-control"/><br/>
                     </c:if>
 
-                    <img id="thumbnail" alt="Image Preview" style="width:20%; margin-top: 10px"
-                         src="data:image/jpg;base64,${book.base64Image}"
-                    />
+                    <img id="thumbnail" alt="Image Preview" class="img-thumbnail mt-2"
+                         src="data:image/jpg;base64,${book.base64Image}"/>
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Price:</label>
+            <div class="form-group row mb-3">
+                <label class="col-sm-4 col-form-label" for="price">Price:</label>
                 <div class="col-sm-8">
-                    <input type="text" name="price" size="20" value="${book.price}" class="form-control" required/>
+                    <input type="text" name="price" id="price" value="${book.price}" class="form-control" required/>
                 </div>
             </div>
 
-            <div class="row">
-                <label class="col-sm-4 col-form-label">Description:</label>
+            <!-- Phần Description giữ nguyên -->
+            <div class="mb-3 col-lg-12">
+                <label class="col-sm-4 col-form-label" for="description">Description:</label>
+
+                <textarea rows="5" cols="50" name="description" id="description" class="form-control"
+                          required>${book.description}</textarea>
             </div>
 
-            <div class="row m-2">
-                <textarea rows="5" cols="50" name="description" id="description" required>${book.description}</textarea>
-            </div>
-
-            <div class="row m-4">
+            <div class="row mb-4">
                 <div class="col text-center">
                     <button type="submit" class="btn btn-primary mr-2">Save</button>
                     <button type="button" class="btn btn-secondary ml-2" onclick="history.go(-1);">Cancel</button>
                 </div>
             </div>
         </form>
-
-        <jsp:directive.include file="footer.jsp"/>
 </div>
+<jsp:directive.include file="footer.jsp"/>
 </body>
 <script type="text/javascript">
 

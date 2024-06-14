@@ -15,50 +15,67 @@
     <div class="row">
         <div class="col text-center">
             <h3>Category Management</h3>
-            <h4><a href="category_form.jsp">Create New Category</a></h4>
+            <h4><a href="category_form.jsp" class="btn btn-success"><i class="bi bi-plus-lg"></i> Create New
+                Category</a>
+            </h4>
         </div>
     </div>
 
     <div class="row">&nbsp;</div>
 
     <c:if test="${message != null}">
-        <div class="row">
-            <div class="col text-center text-success">
-                <h4>${message}</h4>
-            </div>
-        </div>
+        <c:choose>
+            <c:when test="${alertType == 'success'}">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong><i class="fas fa-check-circle"></i> Success!</strong> ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong><i class="fas fa-exclamation-triangle"></i> Warning!</strong> ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </c:otherwise>
+        </c:choose>
     </c:if>
 
     <div class="row">
-        <table class="table table-bordered table-striped table-hover table-responsive-sm">
-            <thead class="thead-dark">
-            <tr>
-                <th>Index</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="cat" items="${listCategories}" varStatus="status">
+        <div class="table-responsive">
+            <table id="categoryTable"
+                   class="table table-centered table-hover mb-0 text-nowrap table-striped table-bordered">
+                <thead class="thead-dark">
                 <tr>
-                    <td>${status.index + 1}</td>
-                    <td>${cat.categoryId}</td>
-                    <td>${cat.name}</td>
-                    <td>
-                        <a href="edit_category?id=${cat.categoryId}">Edit</a> &nbsp;
-                        <a href="javascript:void(0);" class="deleteLink" id="${cat.categoryId}">Delete</a>
-                    </td>
+                    <th>Index</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Actions</th>
                 </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <c:forEach var="cat" items="${listCategories}" varStatus="status">
+                    <tr>
+                        <td>${status.index + 1}</td>
+                        <td>${cat.categoryId}</td>
+                        <td>${cat.name}</td>
+                        <td>
+                            <a href="edit_category?id=${cat.categoryId}" class="text-muted"><i
+                                    class="bi bi-pencil-square"></i></a> &nbsp;
+                            <a href="javascript:void(0);" class="deleteLink text-danger"
+                               id="${cat.categoryId}"><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 
     <jsp:directive.include file="footer.jsp"/>
 </div>
 <script>
+    new DataTable('#categoryTable');
     $(document).ready(function () {
         $(".deleteLink").each(function () {
             $(this).on("click", function () {
