@@ -81,6 +81,7 @@ public class CategoryServices {
 		
 		Category categoryById = categoryDAO.get(categoryId);
 		Category categoryByName = categoryDAO.findByCategoryName(categoryName);
+	
 		
 		//tên đã tồn tại nhưng ở id khác thì không thay đổi được
 		if(categoryByName != null && categoryById.getCategoryId() != categoryByName.getCategoryId()) {

@@ -19,12 +19,14 @@ public class CustomerLoginServlet extends HttpServlet {
         super();
     }
 
+    //do get -> nhấp link login
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CustomerServices customerServices = new CustomerServices(request, response);
 		customerServices.showLogin();
 
 	}
 
+	//do post -> gửi từ link login đó về 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CustomerServices customerServices = new CustomerServices(request, response);
 		customerServices.doLogin();

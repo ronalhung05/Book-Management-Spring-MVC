@@ -25,13 +25,13 @@
 
     <c:set var="cart" value="${sessionScope['cart']}"/>
 
-    <c:if test="${cart.totalItems == 0}">
+    <c:if test="${cart.totalItem == 0}">
         <div class="row">
             <div class="col text-center"><h4>There's no items in your cart</h4></div>
         </div>
     </c:if>
 
-    <c:if test="${cart.totalItems > 0}">
+    <c:if test="${cart.totalItem > 0}">
         <form action="update_cart" method="post" style="max-width: 600px; margin: 0 auto">
             <c:forEach items="${cart.items}" var="item" varStatus="status">
                 <div class="row border rounded p-1">

@@ -163,3 +163,20 @@ img.book-large {
     margin: 20px;
     vertical-align: top;
 }
+
+#contact{
+    font-size: 30px;
+}
+
+.enhanced-text {
+    font-size: 18px; /* T?ng kích th??c ch? c? b?n */
+}
+
+.enhanced-text h1, .enhanced-text h2 {
+    font-size: 2em; /* T?ng kích th??c cho tiêu ?? h1 và h2 */
+}
+
+.enhanced-text p, .enhanced-text li, .enhanced-text .message {
+    font-size: 1.2em; /* T?ng kích th??c cho ?o?n v?n và các m?c li */
+}
+

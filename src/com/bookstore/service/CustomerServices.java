@@ -1,22 +1,17 @@
 package com.bookstore.service;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TreeMap;
+import com.bookstore.dao.CustomerDAO;
+import com.bookstore.dao.OrderDAO;
+import com.bookstore.dao.ReviewDAO;
+import com.bookstore.entity.Customer;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.bookstore.dao.CustomerDAO;
-import com.bookstore.dao.OrderDAO;
-import com.bookstore.dao.ReviewDAO;
-import com.bookstore.entity.Customer;
+import java.io.IOException;
+import java.util.List;
 
 public class CustomerServices {
     CustomerDAO customerDAO = new CustomerDAO();
@@ -180,6 +175,16 @@ public class CustomerServices {
             updateCustomerFieldsFromForm(newCustomer);
 
             customerDAO.create(newCustomer);
+
+            String name = newCustomer.getFirstname();
+            String title = "Registration Successful !!!";
+            String body = "Thank you for your registration at Evergreen BookStore! We are excited to have you join our platform ^^\n" +
+                    "If you have any questions or need further assistance, please contact us at Website or call (+84) 0903091548.\n" +
+                    "Have a great day!\n" +
+                    "Best regards.";
+            //gửi mail
+            MailServices.SendMail(email,title,body);
+
             message = "You have registered successfully! Thank you.<br/>"
                     + "<a href = 'login'>Click here</a> to login";
 
@@ -209,14 +214,16 @@ public class CustomerServices {
         } else {
             HttpSession session = request.getSession();
             request.getSession().setAttribute("loggedCustomer", customer);
-
+            //set customer đăng nhập
+            
+            //điều hướng trang 
             Object objRedirectURL = session.getAttribute("redirectURL");
             if (objRedirectURL != null) {
                 String redirectURL = (String) objRedirectURL;
                 session.removeAttribute("redirectURL");
-                response.sendRedirect(redirectURL);
+                response.sendRedirect(redirectURL); //điều hướng
             } else {
-                showCustomerProfile();
+                showCustomerProfile(); //nếu không có điều hướng -> chuyển sang show profile
             }
         }
 

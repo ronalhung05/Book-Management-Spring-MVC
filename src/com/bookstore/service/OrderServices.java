@@ -308,14 +308,30 @@ public class OrderServices {
         }
     }
 
+    private void sendEmailToCustomer(){
+        //lấy email hiện tại ra
+        HttpSession session = request.getSession();
+        Customer loggedCustomer = (Customer) session.getAttribute("loggedCustomer");
+        String email = loggedCustomer.getEmail();
+        String name = loggedCustomer.getFirstname();
+        String title = "Order Confirmation from Evergreen BookStore";
+        String body = "Dear, Customer " + name + " for Purchasing books at our Evergreen BookStore, for more information, please log in to our Website to view your Oders! ^^\n" +
+                "If you have any questions or need further assistance, please contact us at Website or call (+84) 0903091548.\n" +
+                "Thank you once again for choosing Evergreen BookStore. Have a great day!\n" +
+                "Best regards.";
+        //gửi mail
+        MailServices.SendMail(email,title,body);
+    }
     private void placeOrderCOD(BookOrder order) throws ServletException, IOException {
 
         saveOrder(order);
+        sendEmailToCustomer();
 
         String message = "Thank you. Your order has been received. "
                 + "We will deliver your books within a few days.";
         request.setAttribute("message", message);
         request.setAttribute("pageTitle", "Order Completed");
+
 
         String messagePage = "frontend/message.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(messagePage);
@@ -340,7 +356,13 @@ public class OrderServices {
         order.setCountry(shippingAddress.getCountryCode());
         order.setPhone(shippingPhoneNumber);
 
-        return saveOrder(order);
+        Integer orderId =  saveOrder(order);
+        // Assuming saveOrder successfully saves the order and returns a non-null orderId
+        if (orderId != null) {
+            sendEmailToCustomer(); // Send confirmation email after successful order placement
+        }
+
+        return orderId;
     }
 
     private Integer saveOrder(BookOrder order) {

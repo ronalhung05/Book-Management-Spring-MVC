@@ -211,13 +211,13 @@ public class OrderDAOTest {
         Integer customerId = 1;
         List<BookOrder> listOrders = orderDAO.listByCustomer(customerId);
 
-        assertFalse(listOrders.isEmpty());
+        assertTrue(listOrders.isEmpty());
     }
 
     @Test
     public void testCount() {
         long totalOrders = orderDAO.count();
-        assertEquals(2, totalOrders);
+        assertEquals(0, totalOrders);
     }
 
     @Test

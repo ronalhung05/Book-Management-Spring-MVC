@@ -34,16 +34,19 @@ public class AdminLoginFilter extends HttpFilter implements Filter {
 		boolean loggedIn = session != null && session.getAttribute("useremail") != null;
 		String loginURI = httpRequest.getContextPath() + "/admin/login";
 		boolean loginRequest = httpRequest.getRequestURI().equals(loginURI);
+		//yêu cầu truy cập đăng nhập
 		boolean loginPage = httpRequest.getRequestURI().endsWith("login.jsp");
-		
+		//yêu cầu có phải trang đăng nhập
+
+		//đăng nhập nhưng còn bấm trang đăng nhập -> chuyển admin chính
 		if (loggedIn && (loginRequest || loginPage)) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/");
 			dispatcher.forward(request, response);			
 			
-		} else if (loggedIn || loginRequest) {
+		} else if (loggedIn || loginRequest) {//cho phép vào các site admin khi đã đăng nhập
 			System.out.println("user logged in");
 			chain.doFilter(request, response);	
-		} else {
+		} else { //chưa đăng nhập
 			System.out.println("user not logged in");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
 			dispatcher.forward(request, response);

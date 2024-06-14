@@ -1,17 +1,11 @@
 package com.bookstore.controller.frontend;
 
-import java.io.IOException;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @WebFilter("/*")
 public class CustomerLoginFilter extends HttpFilter implements Filter {
@@ -31,18 +25,19 @@ public class CustomerLoginFilter extends HttpFilter implements Filter {
         HttpSession session = httpRequest.getSession(false); // does not create new session if not exists
         boolean loggedIn = session != null && session.getAttribute("loggedCustomer") != null;
         String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
+        //lấy tên đường dẫn cuối
 
         if (path.startsWith("/admin/")) {
-            chain.doFilter(request, response);
+            chain.doFilter(request, response); //gửi tới bộ lọc tiếp theo
             return;
         }
-        String requestURL = httpRequest.getRequestURL().toString();
+        String requestURL = httpRequest.getRequestURL().toString(); //full url link
         if (!loggedIn && isLoginRequired(requestURL)) {
-            String queryString = httpRequest.getQueryString();
+            String queryString = httpRequest.getQueryString(); //get ?id=...
             String redirectURL = requestURL;
 
             if (queryString != null) {
-                redirectURL = redirectURL.concat("?").concat(queryString);
+                redirectURL = redirectURL.concat("?").concat(queryString); //concate the query string
             }
             session.setAttribute("redirectURL", redirectURL);
             String loginPage = "frontend/login.jsp";
