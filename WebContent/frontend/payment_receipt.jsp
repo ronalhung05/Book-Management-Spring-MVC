@@ -10,36 +10,30 @@
 <div class="container">
     <jsp:directive.include file="header.jsp"/>
 
-    <div class="row">&nbsp;</div>
-
-    <div class="row">
+    <div class="row mt-4">
         <div class="col text-center">
             <h4>You have made payment successfully. Thank you for purchasing!</h4>
             <h4>Your Payment Receipt</h4>
         </div>
     </div>
 
-    <div class="row">&nbsp;</div>
-
     <jsp:directive.include file="receipt.jsp"/>
 
-    <div class="row">&nbsp;</div>
-
-    <div class="row">
+    <div class="row mt-4">
         <div class="col text-center">
-            <input type="button" value="Print Receipt" onclick="javascript:showPrintReceiptPopup();"
-                   class="btn btn-primary"/>
+            <button type="button" class="btn btn-primary" onclick="printReceipt()">Print Receipt</button>
         </div>
     </div>
 
     <jsp:directive.include file="footer.jsp"/>
 </div>
+
 <script>
-    function showPrintReceiptPopup() {
+    function printReceipt() {
         var width = 600;
         var height = 250;
         var left = (screen.width - width) / 2;
-        var top = (screen.width - width) / 2;
+        var top = (screen.height - height) / 2;
 
         window.open('frontend/print_receipt.jsp', '_blank',
             'width=' + width + ', height=' + height +

@@ -41,7 +41,7 @@
     <div class="row">
         <div class="table-responsive">
             <table id="orderTable"
-                   class="table table-centered table-hover mb-0 text-nowrap table-striped table-bordered">
+                   class="table table-centered table-hover mb-0 text-nowrap ">
                 <thead class="thead-dark">
                 <tr>
                     <th>Index</th>
@@ -89,7 +89,7 @@
                                 <c:when test="${order.status == 'Completed'}">
                                     <span class="badge bg-success text-dark">Completed</span>
                                 </c:when>
-                                <c:when test="${order.status == 'Canceled'}">
+                                <c:when test="${order.status == 'Cancelled'}">
                                     <span class="badge bg-danger text-dark">Canceled</span>
                                 </c:when>
                                 <c:otherwise>

@@ -41,7 +41,6 @@
             </div>
 
             <!-- Recipient Information -->
-            <
             <div class="card mb-4 shadow">
                 <div class="card-header bg-info text-white text-center rounded-top">
                     <h3>Recipient Information</h3>

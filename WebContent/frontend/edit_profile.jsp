@@ -9,105 +9,87 @@
 <div class="container">
     <jsp:directive.include file="header.jsp"/>
 
-    <div class="row">&nbsp;</div>
-
-    <div class="row">
-        <div class="col text-center"><h2>Edit My Profile</h2></div>
+    <div class="row mt-4 mb-4">
+        <div class="col text-center">
+            <h2>Edit My Profile</h2>
+        </div>
     </div>
 
-    <div class="row">&nbsp;</div>
-
     <form action="update_profile" method="post" style="max-width: 800px; margin: 0 auto;">
-        <div class="form-group row">
-            <label class="col-sm-4 col-form-label">E-mail:</label>
-            <div class="col-sm-8"><b>${loggedCustomer.email}</b> (Cannot be changed)</div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-4 col-form-label">First Name:</label>
-            <div class="col-sm-8">
-                <input type="text" name="firstname" class="form-control" value="${loggedCustomer.firstname}" required
-                       minlength="2" maxlength="30"/>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" class="form-control" value="${loggedCustomer.email}"
+                           readonly/>
+                </div>
+                <div class="form-group">
+                    <label for="firstname">First Name:</label>
+                    <input type="text" id="firstname" name="firstname" class="form-control"
+                           value="${loggedCustomer.firstname}" required minlength="2" maxlength="30"/>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Last Name:</label>
+                    <input type="text" id="lastname" name="lastname" class="form-control"
+                           value="${loggedCustomer.lastname}" required minlength="2" maxlength="30"/>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control" maxlength="16"
+                           placeholder="Leave blank if not changing"/>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
+                           maxlength="16" oninput="checkPasswordMatch(this)"/>
+                </div>
+                <div class="form-group">
+                    <label for="zipcode">Zip Code:</label>
+                    <input type="text" id="zipcode" name="zipcode" class="form-control"
+                           value="${loggedCustomer.zipcode}" required minlength="3" maxlength="24"/>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="text" id="phone" name="phone" class="form-control" value="${loggedCustomer.phone}"
+                           required minlength="9" maxlength="15"/>
+                </div>
+                <div class="form-group">
+                    <label for="address1">Address Line 1:</label>
+                    <input type="text" id="address1" name="address1" class="form-control"
+                           value="${loggedCustomer.addressLine1}" required minlength="10" maxlength="128"/>
+                </div>
+                <div class="form-group">
+                    <label for="address2">Address Line 2:</label>
+                    <input type="text" id="address2" name="address2" class="form-control"
+                           value="${loggedCustomer.addressLine2}" maxlength="128"/>
+                </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" class="form-control" value="${loggedCustomer.city}"
+                           required minlength="2" maxlength="32"/>
+                </div>
+                <div class="form-group">
+                    <label for="state">State:</label>
+                    <input type="text" id="state" name="state" class="form-control" value="${loggedCustomer.state}"
+                           required minlength="2" maxlength="45"/>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country:</label>
+                    <select id="country" name="country" class="form-control" required>
+                        <c:forEach items="${mapCountries}" var="country">
+                            <option value="${country.value}" ${loggedCustomer.country eq country.value ? 'selected' : ''}>${country.key}</option>
+                        </c:forEach>
+                    </select>
+                </div>
             </div>
         </div>
-        <div class="form-group row">
-            <label class="col-sm-4 col-form-label">Last Name:</label>
-            <div class="col-sm-8">
-                <input type="text" name="lastname" class="form-control" value="${loggedCustomer.lastname}" required
-                       minlength="2" maxlength="30"/>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-4 col-form-label">Phone Number:</label>
-            <div class="col-sm-8">
-                <input type="text" name="phone" class="form-control" value="${loggedCustomer.phone}" required
-                       minlength="9" maxlength="15"/>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-4 col-form-label">Address Line 1:</label>
-            <div class="col-sm-8">
-                <input type="text" name="address1" class="form-control" value="${loggedCustomer.addressLine1}" required
-                       minlength="10" maxlength="128"/>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-4 col-form-label">Address Line 2:</label>
-            <div class="col-sm-8">
-                <input type="text" name="address2" class="form-control" value="${loggedCustomer.addressLine2}" required
-                       maxlength="128"/>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-4 col-form-label">City:</label>
-            <div class="col-sm-8">
-                <input type="text" name="city" class="form-control" value="${loggedCustomer.city}" required
-                       minlength="2" maxlength="32"/>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-4 col-form-label">State:</label>
-            <div class="col-sm-8">
-                <input type="text" name="state" class="form-control" value="${loggedCustomer.state}" required
-                       minlength="2" maxlength="45"/>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-4 col-form-label">Zip Code:</label>
-            <div class="col-sm-8">
-                <input type="text" name="zipcode" class="form-control" value="${loggedCustomer.zipcode}" required
-                       minlength="3" maxlength="24"/>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-4 col-form-label">Country:</label>
-            <div class="col-sm-8">
-                <select name="country" required class="form-control">
-                    <c:forEach items="${mapCountries}" var="country">
-                        <option value="${country.value}"
-                                <c:if test='${loggedCustomer.country eq country.value}'>selected='selected'</c:if> >${country.key}</option>
-                    </c:forEach>
-                </select>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-4 col-form-label">Password:</label>
-            <div class="col-sm-8">
-                <input type="password" id="password" name="password" class="form-control" maxlength="16"
-                       placeholder="Leave password fields blank if you don't want to change password"/>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-4 col-form-label">Confirm Password:</label>
-            <div class="col-sm-8">
-                <input type="password" name="confirmPassword" class="form-control" maxlength="16"
-                       oninput="checkPasswordMatch(this)"/>
-            </div>
-        </div>
-        <div class="row">&nbsp;</div>
-        <div class="form-group row">
+
+        <div class="row mt-3">
             <div class="col text-center">
                 <button type="submit" class="btn btn-primary mr-3">Save</button>
-                <button type="button" onclick="history.go(-1)" class="btn btn-secondary">Cancel</button>
+                <input type="button" value="Cancel" class="btn btn-secondary" onclick="history.go(-1);"/>
             </div>
         </div>
     </form>

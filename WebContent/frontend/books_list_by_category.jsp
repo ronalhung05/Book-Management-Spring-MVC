@@ -15,9 +15,16 @@
 
     <div>&nbsp;</div>
 
-    <div class="row">
+    <div class="row g-4 row-cols-lg-5 row-cols-2 row-cols-md-3">
         <c:forEach items="${listBooks}" var="book">
-            <jsp:directive.include file="book_group.jsp"/>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <jsp:directive.include file="book_group.jsp"/>
+                    </div>
+                </div>
+            </div>
+            <%--        <jsp:directive.include file="book_group.jsp"/>--%>
         </c:forEach>
     </div>
 

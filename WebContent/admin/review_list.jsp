@@ -39,7 +39,7 @@
 
     <div class="row">
         <div class="table-responsive">
-            <table id="reviewTable" class="table table-centered table-hover mb-0 text-nowrap table-striped">
+            <table id="reviewTable" class="table table-centered table-hover mb-0 text-nowrap">
                 <thead class="bg-light">
                 <tr>
                     <th>Index</th>

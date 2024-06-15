@@ -67,8 +67,8 @@
         </div>
     </div>
     <div class="row">
-        <table class="table table-bordered table-striped table-hover table-responsive-sm">
-            <thead class="thead-dark">
+        <table class="table table-hover table-bordered table-responsive-sm">
+            <thead class="bg-light-info">
             <tr>
                 <th>Order ID</th>
                 <th>Ordered By</th>

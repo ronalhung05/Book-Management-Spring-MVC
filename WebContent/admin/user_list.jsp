@@ -39,7 +39,7 @@
 
 
     <div class="row">
-        <table id="userTable" class="table table-bordered table-striped table-hover">
+        <table id="userTable" class="table table-hover">
             <thead class="thead-dark">
             <tr>
                 <th>Index</th>

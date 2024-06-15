@@ -43,8 +43,8 @@
     <div class="row">
         <div class="table-responsive">
             <table id="customerTable"
-                   class="table table-centered table-hover mb-0 text-nowrap table-striped table-bordered">
-                <thead class="thead-dark">
+                   class="table table-centered table-hover mb-0 text-nowrap">
+                <thead class="bg-light">
                 <tr>
                     <th>Index</th>
                     <th>ID</th>

@@ -6,29 +6,26 @@
     <jsp:param name="pageTitle" value="Review Posted"/>
 </jsp:include>
 <body>
-<div class="container">
+<div class="container mt-5">
     <jsp:directive.include file="header.jsp"/>
 
-    <div class="row">&nbsp;</div>
-
-    <div class="row">
-        <div class="col"><h2>Your Reviews</h2></div>
-        <div class="col"><h4>${loggedCustomer.fullname}</h4></div>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <hr/>
+    <div class="row mb-4">
+        <div class="col text-center">
+            <h2>Your Review for "${book.title}"</h2>
+            <h4 class="mt-2">Thank you, ${loggedCustomer.fullname}!</h4>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm">
-            <h4>${book.title}</h4>
-            <img class="img-fluid" src="data:image/jpg;base64,${book.base64Image}"/>
-        </div>
-        <div>&nbsp;</div>
-        <div class="col-sm text-center">
-            <h4>Your review has been posted. Thank you!</h4>
+
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="card">
+                <img class="card-img-top img-fluid" src="data:image/jpg;base64,${book.base64Image}" alt="${book.title}">
+                <div class="card-body">
+                    <h4 class="card-title">${book.title}</h4>
+                    <p class="card-text">Your review has been successfully posted. We appreciate your feedback!</p>
+                    <a href="${pageContext.request.contextPath}/" class="btn btn-primary">Go back to home</a>
+                </div>
+            </div>
         </div>
     </div>
 
