@@ -1,88 +1,46 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Create New Category - Evergreen Bookstore Administration</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <script type="text/javascript" src="../js/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
-</head>
+<jsp:include page="page_head.jsp">
+    <jsp:param name="pageTitle" value="${category == null ? 'Create New Category' : 'Edit Category'}"/>
+</jsp:include>
 <body>
-<jsp:directive.include file="header.jsp"/>
+<div class="container">
+    <jsp:directive.include file="header.jsp"/>
 
+    <div class="row m-3">
+        <div class="col text-center">
+            <h2><c:out value="${category != null ? 'Edit Category' : 'Create New Category'}"/></h2>
+        </div>
+    </div>
 
-<diV align="center">
-    <h2>
-        <c:if test="${category != null}">
-            Edit Category
-        </c:if>
-        <c:if test="${category == null}">
-            Create New Category
-        </c:if>
-    </h2>
-</diV>
-
-<diV align="center">
     <c:if test="${category != null}">
-    <form id="categoryForm" action="update_category" method="post">
-        <input type="hidden" name="categoryId" value=${category.categoryId}/>
+    <form action="update_category" method="post" style="max-width: 400px; margin: 0 auto;">
+        <input type="hidden" name="categoryId" value="${category.categoryId}">
         </c:if>
         <c:if test="${category == null}">
-        <form id="categoryForm" action="create_category" method="post">
+        <form action="create_category" method="post" style="max-width: 400px; margin: 0 auto;">
             </c:if>
 
-            <table class="form">
-                <tbody>
-                <tr>
-                    <td align="right">Name:</td>
-                    <td><input type="text" name="categoryName" id="category"
-                               size="20" value=${categoryName}></td>
-                </tr>
-                <tr>
-                <tr>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <button type="submit">Save</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" onClick="javascript:history.go(-1);">Cancel</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Name:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="categoryName" size="20" value="${category.name}" class="form-control"
+                           required minlength="3" maxlength="20"/>
+                </div>
+            </div>
+
+            <div class="row m-4">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-primary mr-2">Save</button>
+                    <button type="button" class="btn btn-secondary ml-2" onclick="history.go(-1);">Cancel</button>
+                </div>
+            </div>
         </form>
-</diV>
-<jsp:directive.include file="footer.jsp"/>
-<script type="text/javascript">
 
-    $(document).ready(function () {
-        $("#categoryForm").validate({
-            rules: {
-                categoryName: "required"
-            },
-            messages: {
-                categoryName: "Please enter category name"
-            }
-        });
-
-        $("#buttonCancel").click(function () {
-            history.go(-1);
-        });
-
-    });
-
-
-    function validateFormInput() {
-        const categoryField = document.getElementById("category");
-
-        if (categoryField.value.length == 0) {
-            alert("Category name is required!!");
-            categoryField.focus();
-            return false;
-        }
-    }
-</script>
+        <jsp:directive.include file="footer.jsp"/>
+</div>
 </body>
 </html>

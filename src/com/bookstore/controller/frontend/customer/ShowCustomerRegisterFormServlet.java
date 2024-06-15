@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bookstore.service.CustomerServices;
+
 @WebServlet("/register")
 public class ShowCustomerRegisterFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -17,9 +19,8 @@ public class ShowCustomerRegisterFormServlet extends HttpServlet {
         super();
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String registerForm = "frontend/register_form.jsp";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(registerForm);
-		dispatcher.forward(request,response);
+		CustomerServices customerServices = new CustomerServices(request, response);
+		customerServices.ShowCustomerRegistrationForm();
 	}
 
 }

@@ -1,12 +1,12 @@
 <c:forTokens items="${book.ratingStars}" delims="," var="star">
     <c:if test="${star eq 'on'}">
-        <img src="images/rating_on.png">
+        <i class="bi bi-star-fill text-warning"></i>
     </c:if>
     <c:if test="${star eq 'off'}">
-        <img src="images/rating_off.png">
+        <i class="bi bi-star"></i>
     </c:if>
     <c:if test="${star eq 'half'}">
-        <img src="images/rating_half.png">
+        <i class="bi bi-star-half text-warning"></i>
     </c:if>
 
 </c:forTokens>

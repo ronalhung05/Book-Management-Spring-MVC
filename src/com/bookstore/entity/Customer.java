@@ -3,6 +3,7 @@ package com.bookstore.entity;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -33,9 +35,12 @@ public class Customer implements java.io.Serializable {
 
 	private Integer customerId;
 	private String email;
-	private String fullname;
-	private String address;
+	private String firstname;
+	private String lastname;
+	private String addressLine1;
+	private String addressLine2;
 	private String city;
+	private String state;
 	private String country;
 	private String phone;
 	private String zipcode;
@@ -47,12 +52,15 @@ public class Customer implements java.io.Serializable {
 	public Customer() {
 	}
 
-	public Customer(String email, String fullname, String address, String city, String country, String phone,
+	public Customer(String email, String firstname, String lastname, String address1, String address2, String city, String state, String country, String phone,
 			String zipcode, String password, Date registerDate) {
 		this.email = email;
-		this.fullname = fullname;
-		this.address = address;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.addressLine1 = address1;
+		this.addressLine2 = address2;
 		this.city = city;
+		this.state = state;
 		this.country = country;
 		this.phone = phone;
 		this.zipcode = zipcode;
@@ -60,17 +68,9 @@ public class Customer implements java.io.Serializable {
 		this.registerDate = registerDate;
 	}
 
-	public Customer(String email, String fullname, String address, String city, String country, String phone,
+	public Customer(String email, String firstname, String lastname, String address1, String address2, String city, String state, String country, String phone,
 			String zipcode, String password, Date registerDate, Set<Review> reviews, Set<BookOrder> bookOrders) {
-		this.email = email;
-		this.fullname = fullname;
-		this.address = address;
-		this.city = city;
-		this.country = country;
-		this.phone = phone;
-		this.zipcode = zipcode;
-		this.password = password;
-		this.registerDate = registerDate;
+		this(email, firstname, lastname, address1, address2, city, country, state, phone, zipcode, password, registerDate);
 		this.reviews = reviews;
 		this.bookOrders = bookOrders;
 	}
@@ -96,24 +96,49 @@ public class Customer implements java.io.Serializable {
 		this.email = email;
 	}
 
-	@Column(name = "fullname", nullable = false, length = 30)
+	@Column(name = "firstname", nullable = false, length = 30)
+	public String getFirstname() {
+		return this.firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+	
+
+	@Column(name = "lastname", nullable = false, length = 30)
+	public String getLastname() {
+		return this.lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	@Transient
 	public String getFullname() {
-		return this.fullname;
+		return this.firstname + " "+ this.lastname;
+	}
+	
+	@Column(name = "address_line1", nullable = false, length = 128)
+	public String getAddressLine1() {
+		return this.addressLine1;
 	}
 
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
+	public void setAddressLine1(String address1) {
+		this.addressLine1 = address1;
+	}
+	
+	@Column(name = "address_line2", nullable = false, length = 128)
+	public String getAddressLine2() {
+		return this.addressLine2;
 	}
 
-	@Column(name = "address", nullable = false, length = 128)
-	public String getAddress() {
-		return this.address;
+	public void setAddressLine2(String address2) {
+		this.addressLine2 = address2;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
+	
 	@Column(name = "city", nullable = false, length = 32)
 	public String getCity() {
 		return this.city;
@@ -123,13 +148,27 @@ public class Customer implements java.io.Serializable {
 		this.city = city;
 	}
 
-	@Column(name = "country", nullable = false, length = 64)
+	@Column(name = "state", nullable = false, length = 45)
+	public String getState() {
+		return this.state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+	
+	@Column(name = "country", nullable = false, length = 45)
 	public String getCountry() {
 		return this.country;
 	}
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+	
+	@Transient
+	public String getCountryName() {
+		return new Locale("", this.country).getDisplayCountry();
 	}
 
 	@Column(name = "phone", nullable = false, length = 15)

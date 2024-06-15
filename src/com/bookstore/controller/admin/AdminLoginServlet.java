@@ -22,4 +22,5 @@ public class AdminLoginServlet extends HttpServlet {
 		 services.login();
 	}
 
+	//không có doget
 }

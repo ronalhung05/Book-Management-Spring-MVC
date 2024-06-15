@@ -1,57 +1,76 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Customer Profile - Online Books Store</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
+<jsp:include page="page_head.jsp">
+    <jsp:param name="pageTitle" value="Customer Profile"/>
+</jsp:include>
 <body>
-<jsp:directive.include file="header.jsp"/>
+<div class="container">
+    <jsp:directive.include file="header.jsp"/>
 
+    <div class="row mt-4">
+        <div class="col text-center">
+            <h3>Welcome, ${loggedCustomer.fullname}</h3>
+        </div>
+    </div>
 
-<div align="center">
-    <div class="col text-center"><h3>Welcome, ${loggedCustomer.fullname}</h3></div>
+    <div class="row mt-4">
+        <div class="col-sm-3"></div>
 
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col"><b>E-mail Address:</b></div>
+                        <div class="col">${loggedCustomer.email}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col"><b>First Name:</b></div>
+                        <div class="col">${loggedCustomer.firstname}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col"><b>Last Name:</b></div>
+                        <div class="col">${loggedCustomer.lastname}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col"><b>Phone Number:</b></div>
+                        <div class="col">${loggedCustomer.phone}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col"><b>Address Line 1:</b></div>
+                        <div class="col">${loggedCustomer.addressLine1}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col"><b>Address Line 2:</b></div>
+                        <div class="col">${loggedCustomer.addressLine2}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col"><b>City:</b></div>
+                        <div class="col">${loggedCustomer.city}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col"><b>State:</b></div>
+                        <div class="col">${loggedCustomer.state}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col"><b>Zip Code:</b></div>
+                        <div class="col">${loggedCustomer.zipcode}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col"><b>Country:</b></div>
+                        <div class="col">${loggedCustomer.countryName}</div>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="edit_profile" class="btn btn-primary">Edit My Profile</a>
+                </div>
+            </div>
+        </div>
 
-    <table class="customer">
-        <tr>
-            <td><b>E-mail Address:</b>
-            <td>${loggedCustomer.email}</td>
-        </tr>
-        <tr>
-            <td><b>Full Name:</b>
-            <td>${loggedCustomer.fullname}</td>
-        </tr>
-        <tr>
-            <td><b>Phone Number:</b>
-            <td>${loggedCustomer.phone}</td>
-        </tr>
-        <tr>
-            <td><b>Address:</b>
-            <td>${loggedCustomer.address}</td>
-        </tr>
-        <tr>
-            <td><b>City:</b>
-            <td>${loggedCustomer.city}</td>
-        </tr>
-        <tr>
-            <td><b>ZipCode:</b>
-            <td>${loggedCustomer.zipcode}</td>
-        </tr>
-        <tr>
-            <td><b>Country:</b>
-            <td>${loggedCustomer.country}</td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-        </tr>
+        <div class="col-sm-3"></div>
+    </div>
 
-        <tr>
-            <td colspan="2" align="center"><b><a href="edit_profile">Edit My Profile</a></b></td>
-        </tr>
-    </table>
+    <jsp:directive.include file="footer.jsp"/>
 </div>
-<jsp:directive.include file="footer.jsp"/>
 </body>
 </html>

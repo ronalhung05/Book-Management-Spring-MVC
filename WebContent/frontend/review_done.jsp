@@ -1,45 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Review Posted - Online Book Store</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script type="text/javascript" src="js/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
-</head>
+<jsp:include page="page_head.jsp">
+    <jsp:param name="pageTitle" value="Review Posted"/>
+</jsp:include>
 <body>
-<jsp:directive.include file="header.jsp"/>
-<div align="center">
-    <form id="reviewForm" action="submit_review" method="post">
-        <table class="normal" width="70%">
-            <tr>
-                <td><h2>Your reviews</h2></td>
-                <td>&nbsp;</td>
-                <td><h2>${loggedCustomer.fullname}</h2></td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <hr>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span id="book-title">${book.title}</span> <br>
-                    <img class="book_large" src="data:image/jpg;base64,${book.base64Image}">
-                </td>
-                <td colspan="2">
-                    <h2>Your reviews has posted successfully!</h2>
-                </td>
-            </tr>
-        </table>
-    </form>
+<div class="container mt-5">
+    <jsp:directive.include file="header.jsp"/>
 
+    <div class="row mb-4">
+        <div class="col text-center">
+            <h2>Your Review for "${book.title}"</h2>
+            <h4 class="mt-2">Thank you, ${loggedCustomer.fullname}!</h4>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="card">
+                <img class="card-img-top img-fluid" src="data:image/jpg;base64,${book.base64Image}" alt="${book.title}">
+                <div class="card-body">
+                    <h4 class="card-title">${book.title}</h4>
+                    <p class="card-text">Your review has been successfully posted. We appreciate your feedback!</p>
+                    <a href="${pageContext.request.contextPath}/" class="btn btn-primary">Go back to home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <jsp:directive.include file="footer.jsp"/>
 </div>
-<jsp:directive.include file="footer.jsp"/>
-
 </body>
 </html>

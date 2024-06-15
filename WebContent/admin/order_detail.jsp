@@ -1,125 +1,56 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Order Details - Evergreen Bookstore Administration</title>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
+	<jsp:include page="page_head.jsp">
+		<jsp:param name="pageTitle" value="Order Details" />
+	</jsp:include>
 <body>
-<jsp:directive.include file="header.jsp"/>
-<div align="center">
-    <h2>Details of Order ID: ${order.orderId}</h2>
-</div>
-<c:if test="${message != null}">
-    <div align="center">
-        <h4 class="message">
-            <i>${message}</i>
-        </h4>
-    </div>
-</c:if>
+<div class="container">
+	<jsp:directive.include file="header.jsp" />
+	
+	<div class="row">&nbsp;</div>
+	
+	<div class="row">
+		<div class="col text-center">
+			<h3>Details of Order ID: ${order.orderId}</h3>
+		</div>
+	</div>
+	
+	<div class="row">&nbsp;</div>
+	
+	<c:if test="${message != null}">
+		<div class="row">
+			<div class="col text-center text-success">	
+				<h4>${message}</h4>
+			</div>
+		</div>
+	</c:if>
 
-<div align="center">
-    <h2>Order Overview:</h2>
-    <table>
-        <tr>
-            <td><b>Ordered By: </b></td>
-            <td>${order.customer.fullname}</td>
-        </tr>
-        <tr>
-            <td><b>Book Copies: </b></td>
-            <td>${order.bookCopies}</td>
-        </tr>
-        <tr>
-            <td><b>Total Amount: </b></td>
-            <td><fmt:formatNumber value="${order.total}" type="currency"/></td>
-        </tr>
-        <tr>
-            <td><b>Recipient Name: </b></td>
-            <td>${order.recipientName}</td>
-        </tr>
-        <tr>
-            <td><b>Recipient Phone: </b></td>
-            <td>${order.recipientPhone}</td>
-        </tr>
-        <tr>
-            <td><b>Ship To: </b></td>
-            <td>${order.shippingAddress}</td>
-        </tr>
-        <tr>
-            <td><b>Payment Method: </b></td>
-            <td>${order.paymentMethod}</td>
-        </tr>
-        <tr>
-            <td><b>Order Status: </b></td>
-            <td>${order.status}</td>
-        </tr>
-        <tr>
-            <td><b>Order Date: </b></td>
-            <td>${order.orderDate}</td>
-        </tr>
+	<jsp:directive.include file="../common/common_order_detail.jsp" />	
 
-    </table>
-</div>
-<div align="center">
-    <h2>Ordered Book: </h2>
-    <table border="1">
-        <tr>
-            <th>Index</th>
-            <th>Book Title</th>
-            <th>Author</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-        </tr>
-        <c:forEach items="${order.orderDetails}" var="orderDetail" varStatus="status">
-            <tr>
-                <td>${status.index + 1}</td>
-                <td>
-                    <img style="vertical-align: middle" src="data:image/jpg;base64,${orderDetail.book.base64Image}"
-                         width="48" height="64"/>
-                        ${orderDetail.book.title}
-                </td>
-                <td>${orderDetail.book.author}</td>
-                <td><fmt:formatNumber value="${orderDetail.book.price}" type="currency"/></td>
-                <td>${orderDetail.quantity}</td>
-                <td><fmt:formatNumber value="${orderDetail.subtotal}" type="currency"/></td>
-            </tr>
-        </c:forEach>
-        <tr>
-            <td colspan="4" align="right">
-                <b><i>TOTAL:</i></b>
-            </td>
-            <td>
-                <b>${order.bookCopies}</b>
-            </td>
-            <td>
-                <b><fmt:formatNumber value="${order.total}" type="currency"/> </b>
-            </td>
-        </tr>
-    </table>
-</div>
-<div align="center">
-    <br>
-    <a href="edit_order?id=${order.orderId}">Edit Order</a>
-    &nbsp;&nbsp;
-    <a href="delete_order?id=${order.orderId}">Delete Order</a>
-</div>
-<jsp:directive.include file="footer.jsp"/>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".deleteLink").each(function () {
-            $(this).on("click", function () {
-                orderId = $(this).attr("id");
-                if (confirm('Are you sure you want to delete the order with ID ' + orderId + '?')) {
-                    window.location = 'delete_order?id=' + orderId;
-                }
-            });
-        });
-    });
-</script>
+	<div class="row m-4">
+		<div class="col text-center">
+			<a href="edit_order?id=${order.orderId}" class="btn btn-primary mr-2">Edit this Order</a>
+			<a href="javascript:void(0);" class="deleteLink btn btn-secondary ml-2" id="${order.orderId}">Delete this Order</a>
+		</div>
+	</div>
+	
+	<jsp:directive.include file="footer.jsp" />
+</div>	
+	<script>
+		$(document).ready(function() {
+			$(".deleteLink").each(function() {
+				$(this).on("click", function() {
+					orderId = $(this).attr("id");
+					if (confirm('Are you sure you want to delete the order with ID ' +  orderId + '?')) {
+						window.location = 'delete_order?id=' + orderId;
+					}					
+				});
+			});
+		});	
+	</script>
 </body>
 </html>

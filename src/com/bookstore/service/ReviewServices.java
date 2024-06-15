@@ -1,19 +1,18 @@
 package com.bookstore.service;
 
-import java.io.IOException;
-import java.util.List;
+import com.bookstore.dao.BookDAO;
+import com.bookstore.dao.ReviewDAO;
+import com.bookstore.entity.Book;
+import com.bookstore.entity.Customer;
+import com.bookstore.entity.Review;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.bookstore.dao.BookDAO;
-import com.bookstore.dao.ReviewDAO;
-import com.bookstore.entity.Book;
-import com.bookstore.entity.Customer;
-import com.bookstore.entity.Review;
+import java.io.IOException;
+import java.util.List;
 
 public class ReviewServices {
     private ReviewDAO reviewDAO;
@@ -28,22 +27,22 @@ public class ReviewServices {
     }
 
     public void listAllReview() throws ServletException, IOException {
-        listAllReview(null);
+        listAllReview(null, null);
     }
 
-    public void listAllReview(String message) throws ServletException, IOException {
+    public void listAllReview(String message, String alertType) throws ServletException, IOException {
         List<Review> listReviews = reviewDAO.listAll();
 
         request.setAttribute("listReviews", listReviews);
 
         if (message != null) {
             request.setAttribute("message", message);
+            request.setAttribute("alertType", alertType);
         }
 
         String listPage = "review_list.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(listPage);
         dispatcher.forward(request, response);
-
     }
 
     public void editReview() throws ServletException, IOException {
@@ -69,9 +68,9 @@ public class ReviewServices {
         reviewDAO.update(review);
 
         String message = "The review has been updated successfully.";
+        String alertType = "success";
 
-        listAllReview(message);
-
+        listAllReview(message, alertType);
     }
 
     public void deleteReview() throws ServletException, IOException {
@@ -79,14 +78,16 @@ public class ReviewServices {
         Review review = reviewDAO.get(reviewId);
 
         String message;
+        String alertType;
         if (review == null) {
             message = "Could not find a review with ID " + reviewId + ", or it might have been deleted by another admin.";
+            alertType = "warning";
         } else {
             message = "The review has been deleted successfully.";
+            alertType = "success";
             reviewDAO.delete(reviewId);
         }
-        listAllReview(message);
-
+        listAllReview(message, alertType);
     }
 
 

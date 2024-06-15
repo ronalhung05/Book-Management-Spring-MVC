@@ -1,172 +1,147 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Create New Book - Evergreen Bookstore Administration</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link href="../css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="..//css/richtext.min.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>${book != null ? 'Edit Book' : 'Create New Book'} - Evergreen Bookstore Administration</title>
 
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script type="text/javascript" src="../js/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.richtext.min.js"></script>
-    <script type="text/javascript" src="../js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/richtext.min.css">
+    <script type="text/javascript" src="../js/jquery.richtext.min.js"></script>
+    <link rel="stylesheet" href="../css/theme.min.css">
 </head>
 <body>
-<jsp:directive.include file="header.jsp"/>
+<div class="container mt-4">
+    <jsp:include page="header.jsp"/>
 
+    <div class="row mb-4">
+        <div class="col text-center">
+            <h2><c:out value="${book != null ? 'Edit Book' : 'Create New Book'}"/></h2>
+        </div>
+    </div>
 
-<diV align="center">
-    <h2>
-        <c:if test="${book != null}">
-            Edit Book
-        </c:if>
-        <c:if test="${book == null}">
-            Create New Book
-        </c:if>
-    </h2>
-</diV>
-
-<diV align="center">
     <c:if test="${book != null}">
-    <form name="bookForm" id="bookForm" action="update_book" method="post"
-          enctype="multipart/form-data">
-        <input type="hidden" name="bookId" value=${book.bookId }/>
+    <form action="update_book" method="post" enctype="multipart/form-data" style="max-width: 600px; margin: 0 auto;">
+        <input type="hidden" name="bookId" value="${book.bookId}">
         </c:if>
         <c:if test="${book == null}">
-        <form name="bookForm" id="bookForm" action="create_book" method="post"
-              enctype="multipart/form-data">
+        <form action="create_book" method="post" enctype="multipart/form-data"
+              style="max-width: 600px; margin: 0 auto;">
             </c:if>
-            <table class="form">
-                <tbody>
-                <tr>
-                    <td align="right">Category:</td>
-                    <td>
-                        <select name="category">
-                            <c:forEach items="${listCategory}" var="category">
-                                <c:if test="${category.categoryId eq book.category.categoryId}">
-                                    <option value="${category.categoryId}" selected>
-                                </c:if>
-                                <c:if test="${category.categoryId ne book.category.categoryId}">
-                                    <option value="${category.categoryId}">
-                                </c:if>
-                                ${category.name}
-                                </option>
-                            </c:forEach>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td align="right">Title:</td>
-                    <td><input type="text" name="title" id="title" size="20"
-                               value="${book.title}"></td>
-                </tr>
-                <tr>
-                    <td align="right">Author:</td>
-                    <td><input type="text" name="author" id="author" size="20"
-                               value="${book.author}"></td>
-                </tr>
-                <tr>
-                    <td align="right">ISBN:</td>
-                    <td><input type="text" name="isbn" id="isbn" size="20"
-                               value="${book.isbn}"></td>
-                </tr>
-                <tr>
-                    <td align="right">Publish Date:</td>
-                    <td><input type="text" name="publishDate" id="publishDate"
-                               size="20" value="<fmt:formatDate pattern='MM/dd/yyyy' value='${book.publishDate }' />"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">Book Image:</td>
-                    <td align="left"><input type="file" name="bookImage"
-                                            id="bookImage" size="20"/><br/> <img id="thumbnail"
-                                                                                 alt="Image Preview"
-                                                                                 style="width: 20%; margin-top: 10px"
-                                                                                 src="data:image/jpg;base64,${book.base64Image }">
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">Price:</td>
-                    <td><input type="text" name="price" id="price" size="20"
-                               value="${book.price}"></td>
-                </tr>
-                <tr>
-                    <td align="right">Description:</td>
-                    <td align="left"><textarea id="description" name="description"
-                                               rows="5" cols="50">${description}</textarea></td>
-                </tr>
 
-                <tr>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <button type="submit">Save</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" onClick="javascript:history.go(-1);">Cancel</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="form-group row mb-3">
+                <label class="col-sm-4 col-form-label" for="category">Category:</label>
+                <div class="col-sm-8">
+                    <select name="category" id="category" class="form-control" required>
+                        <c:forEach items="${listCategory}" var="category">
+                            <c:if test="${category.categoryId eq book.category.categoryId}">
+                                <option value="${category.categoryId}" selected>${category.name}</option>
+                            </c:if>
+                            <c:if test="${category.categoryId ne book.category.categoryId}">
+                                <option value="${category.categoryId}">${category.name}</option>
+                            </c:if>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-sm-4 col-form-label" for="title">Title:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="title" id="title" value="${book.title}" class="form-control" required/>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-sm-4 col-form-label" for="author">Author:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="author" id="author" value="${book.author}" class="form-control" required/>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-sm-4 col-form-label" for="isbn">ISBN:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="isbn" id="isbn" value="${book.isbn}" class="form-control" required/>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-sm-4 col-form-label" for="publishDate">Publish Date:</label>
+                <div class="col-sm-8">
+                    <input type="date" name="publishDate" id="publishDate" class="form-control" required
+                           value="<fmt:formatDate pattern='yyyy-MM-dd' value='${book.publishDate}' />"/>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-sm-4 col-form-label" for="bookImage">Book Image:</label>
+                <div class="col-sm-8">
+                    <c:if test="${book == null}">
+                        <input type="file" id="bookImage" name="bookImage" class="form-control" required/><br/>
+                    </c:if>
+                    <c:if test="${book != null}">
+                        <input type="file" id="bookImage" name="bookImage" class="form-control"/><br/>
+                    </c:if>
+
+                    <img id="thumbnail" alt="Image Preview" class="img-thumbnail mt-2"
+                         src="data:image/jpg;base64,${book.base64Image}"/>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-sm-4 col-form-label" for="price">Price:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="price" id="price" value="${book.price}" class="form-control" required/>
+                </div>
+            </div>
+
+            <!-- Phần Description giữ nguyên -->
+            <div class="mb-3 col-lg-12">
+                <label class="col-sm-4 col-form-label" for="description">Description:</label>
+                <textarea rows="5" cols="50" name="description" id="description" class="form-control"
+                          required>${book.description}</textarea>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-primary mr-2">Save</button>
+                    <button type="button" class="btn btn-secondary ml-2" onclick="history.go(-1);">Cancel</button>
+                </div>
+            </div>
         </form>
-</diV>
+</div>
 <jsp:directive.include file="footer.jsp"/>
+</body>
 <script type="text/javascript">
-    // Get a reference to our file input
-    //const fileInput = document.querySelector('input[type="file"]');
-    //fileInput.onchange = () => {
-    //  const selectedFile = fileInput.files[0];
-    //  console.log(selectedFile);
-    //}
 
     $(document).ready(function () {
-
-
-        $('#publishDate').datepicker();
         $('#description').richText();
 
         $('#bookImage').change(function () {
             showImageThumbnail(this);
         });
-        $("#bookForm").validate({
-            rules: {
-                category: "required",
-                title: "required",
-                author: "required",
-                isbn: "required",
-                publishDate: "required",
-                //bookImage : "required",
-                price: "required",
-                description: "required"
-            },
-
-            messages: {
-                category: "Please enter book category",
-                title: "Please enter book title",
-                author: "Please enter author's name",
-                isbn: "Please enter isbn number",
-                publishDate: "Please enter publish date",
-                //bookImage : "Please choose the book image",
-                price: "Please enter the book price",
-                description: "Please enter book description"
-            }
-        });
-
-        $("#buttonCancel").click(function () {
-            history.go(-1);
-        });
 
     });
 
     function showImageThumbnail(fileInput) {
-        let file = fileInput.files[0];
+        var file = fileInput.files[0];
 
-        let reader = new FileReader();
+        var reader = new FileReader();
 
         reader.onload = function (e) {
             $('#thumbnail').attr('src', e.target.result);
@@ -175,7 +150,4 @@
         reader.readAsDataURL(file);
     }
 </script>
-
-
-</body>
 </html>

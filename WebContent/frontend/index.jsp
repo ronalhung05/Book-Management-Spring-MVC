@@ -1,43 +1,84 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Evergreen - Online Books Store</title>
-</head>
+<jsp:include page="page_head.jsp">
+    <jsp:param name="pageTitle" value="Evergreen Books"/>
+</jsp:include>
 <body>
-<jsp:directive.include file="header.jsp"/>
-<div align="center">
-    <br/> <br/>
-    <h2>New books:</h2>
-    <div class="book_group">
-        <c:forEach items="${listNewBooks}" var="book">
-            <div class="book">
-                <div>
-                    <a href="view_book?id=${book.bookId}">
-                        <img class="book_small" src="data:image/jpg;base64,${book.base64Image}"/>
-                    </a>
-                </div>
+<div class="container">
 
-                <div>
-                    <a href="view_book?id=${book.bookId}">
-                        <b>${book.title}</b>
-                    </a>
+    <jsp:directive.include file="header.jsp"/>
+
+    <div class="row">
+        <div class="col-12 mb-6">
+            <h3 class="mb-0">New Book</h3>
+            &nbsp;
+        </div>
+    </div>
+    <div class="row g-4 row-cols-lg-5 row-cols-2 row-cols-md-3">
+        <c:forEach items="${listNewBooks}" var="book">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <jsp:directive.include file="book_group.jsp"/>
+                    </div>
                 </div>
-                <div>
-                    <jsp:directive.include file="book_rating.jsp"/>
-                </div>
-                <div></div>
-                <div><i>by ${book.author}</i></div>
-                <div><b>$${book.price}</b></div>
             </div>
         </c:forEach>
     </div>
-    <h2>Best-selling Books</h2>
-    <h2>Favourite Books</h2>
-    <br/> <br/>
+    &nbsp;
+    <div class="row">
+        <div class="col-12 mb-6">
+            <h3 class="mb-0">Best-Selling Books</h3>
+            &nbsp;
+        </div>
+    </div>
+
+    <div class="row g-4 row-cols-lg-5 row-cols-2 row-cols-md-3">
+        <c:forEach items="${listBestSellingBooks}" var="book">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <jsp:directive.include file="book_group.jsp"/>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+
+    &nbsp;
+    <div class="row">
+        <div class="col-12 mb-6">
+            <h3 class="mb-0">Most Favoured Books</h3>
+            &nbsp;
+        </div>
+    </div>
+
+    <div class="row g-4 row-cols-lg-5 row-cols-2 row-cols-md-3">
+        <c:forEach items="${listFavoredBooks}" var="book">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <jsp:directive.include file="book_group.jsp"/>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
 </div>
 <jsp:directive.include file="footer.jsp"/>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('.add-to-cart-btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();  // Ngăn chặn hành vi mặc định của thẻ <a>
+                const bookId = this.getAttribute('data-book-id');
+                console.log('Book ID:', bookId);  // Kiểm tra Book ID
+                window.location.href = 'add_to_cart?book_id=' + bookId;
+            });
+        });
+    });
+</script>
 </body>
 </html>

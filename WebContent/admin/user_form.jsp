@@ -1,119 +1,61 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
-    <script type="text/javascript" src="../js/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
-
-    <meta charset="ISO-8859-1">
-    <title>Create New User - Evergreen Bookstore Administration</title>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
+<jsp:include page="page_head.jsp">
+    <jsp:param name="pageTitle" value="${user == null ? 'Create New User' : 'Edit User'}"/>
+</jsp:include>
 <body>
-<jsp:directive.include file="header.jsp"/>
+<div class="container mt-4">
+    <jsp:include page="header.jsp"/>
 
-
-<diV align="center">
-    <h1 class="pageheading">
-        <c:if test="${user != null}">
-            Edit User
-        </c:if>
-        <c:if test="${user == null}">
-            Create New User
-        </c:if>
-    </h1>
-</div>
-
-<div align="center">
+    <div class="row mb-4">
+        <div class="col text-center">
+            <h2><c:out value="${user != null ? 'Edit User' : 'Create New User'}"/></h2>
+        </div>
+    </div>
 
     <c:if test="${user != null}">
-        <form id="userForm" action="update_user" method="post"
-        ">
-        <input type="hidden" name="userId" value=${user.userId}>
-    </c:if>
-    <c:if test="${user == null}">
-    <form id="userForm" action="create_user" method="post">
+    <form action="update_user" method="post" style="max-width: 400px; margin: 0 auto;">
+        <input type="hidden" name="userId" value="${user.userId}">
         </c:if>
-        <table class="form">
-            <tbody>
-            <tr>
-                <td align="right">Email:</td>
-                <td align="left"><input type="text" name="email" id="email"
-                                        size="20" value=${user.email}></td>
-            </tr>
-            <tr>
-                <td align="right">Full Name:</td>
-                <td align="left"><input type="text" name="fullname" id="name"
-                                        size="20" value=${fullName}></td>
-            </tr>
-            <tr>
-                <td align="right">Password:</td>
-                <td align="left"><input type="password" name="password"
-                                        id="password" size="20" value=${user.password}></td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <button type="submit">Save</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button type="button" id="buttonCancel">Cancel</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </form>
-</diV>
+        <c:if test="${user == null}">
+        <form action="create_user" method="post" style="max-width: 400px; margin: 0 auto;">
+            </c:if>
 
+            <div class="form-group row mb-3">
+                <label class="col-sm-4 col-form-label" for="email">Email:</label>
+                <div class="col-sm-8">
+                    <input type="email" name="email" id="email" value="${user.email}" class="form-control" required
+                           minlength="5" maxlength="30"/>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-sm-4 col-form-label" for="fullname">Full name:</label>
+                <div class="col-sm-8">
+                    <input type="text" name="fullname" id="fullname" value="${user.fullName}" class="form-control"
+                           required minlength="3" maxlength="30"/>
+                </div>
+            </div>
+
+            <div class="form-group row mb-4">
+                <label class="col-sm-4 col-form-label" for="password">Password:</label>
+                <div class="col-sm-8">
+                    <input type="password" name="password" id="password" value="${user.password}" class="form-control"
+                           required minlength="4" maxlength="32"/>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col text-center">
+                    <button type="submit" class="btn btn-primary mr-2">Save</button>
+                    <button type="button" class="btn btn-secondary ml-2" onclick="history.go(-1);">Cancel</button>
+                </div>
+            </div>
+        </form>
+</div>
 <jsp:directive.include file="footer.jsp"/>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#userForm").validate({
-            rules: {
-                mail: "required",
-                fullname: "required",
-                password: "required",
-            },
-
-            messages: {
-                mail: "Please enter email address",
-                fullname: "Please enter full name",
-                password: "Please enter password"
-            }
-        });
-
-        $("#buttonCancel").click(function () {
-            history.go(-1);
-        });
-
-    });
-
-    function validateFormInput() {
-        const emailField = document.getElementById("email");
-        const fullNameField = document.getElementById("name");
-        const passwordField = document.getElementById("password");
-
-        if (emailField.value.length == 0) {
-            alert("Email is required!!");
-            emailField.focus();
-            return false;
-        }
-
-        if (fullNameField.value.length == 0) {
-            alert("Full Name is required!!");
-            fullNameField.focus();
-            return false;
-        }
-
-        if (passwordField.value.length == 0) {
-            alert("Password is required!!");
-            passwordField.focus();
-            return false;
-        }
-    }
-</script>
 </body>
-
 </html>

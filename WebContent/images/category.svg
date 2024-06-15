@@ -1,0 +1,10 @@
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" height="50px" width="50px">
+    <g id="Layer">
+        <circle cx="23.5" cy="23.5" fill="#ffc107" r="6.5"/>
+        <g fill="#2196f3">
+            <rect height="13" rx="3" width="13" x="17" y="2"/>
+            <rect height="13" rx="3" width="13" x="2" y="2"/>
+            <rect height="13" rx="3" width="13" x="2" y="17"/>
+        </g>
+    </g>
+</svg>

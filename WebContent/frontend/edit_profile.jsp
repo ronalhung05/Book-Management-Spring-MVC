@@ -2,135 +2,100 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Register as a Customer</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="/css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="js/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
-</head>
+<jsp:include page="page_head.jsp">
+    <jsp:param name="pageTitle" value="Edit My Profile"/>
+</jsp:include>
 <body>
-<jsp:directive.include file="header.jsp"/>
+<div class="container">
+    <jsp:directive.include file="header.jsp"/>
 
-<div align="center">
-    <h2 class="pageheading">
-        Edit My Profile
-    </h2>
-</div>
+    <div class="row mt-4 mb-4">
+        <div class="col text-center">
+            <h2>Edit My Profile</h2>
+        </div>
+    </div>
 
-<div align="center">
-    <form action="update_profile" id="customerForm" method="post">
-        <table class="form">
-            <tbody>
-            <tr>
-                <td align="right">E-mail:</td>
-                <td align="left"><b>${loggedCustomer.email} (Cannot be changed)</b></td>
-            </tr>
-            <tr>
-                <td align="right">Full Name:</td>
-                <td align="left"><input type="text" id="fullName"
-                                        name="fullName" size="45" value="${loggedCustomer.fullname}"></td>
-            </tr>
-            <tr>
-                <td align="right">Phone Number:</td>
-                <td align="left"><input type="text" id="phone" name="phone"
-                                        size="45" value="${loggedCustomer.phone}"></td>
-            </tr>
-            <tr>
-                <td align="right">Address:</td>
-                <td align="left"><input type="text" id="address"
-                                        name="address" size="45" value="${loggedCustomer.address}"></td>
-            </tr>
-            <tr>
-                <td align="right">City:</td>
-                <td align="left"><input type="text" id="city" name="city"
-                                        size="45" value="${loggedCustomer.city}"></td>
-            </tr>
-            <tr>
-                <td align="right">ZipCode:</td>
-                <td align="left"><input type="text" id="zipcode"
-                                        name="zipcode" size="45" value="${loggedCustomer.zipcode}"></td>
-            </tr>
-            <tr>
-                <td align="right">Country:</td>
-                <td align="left"><input type="text" id="country"
-                                        name="country" size="45" value="${loggedCustomer.country}"></td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <i>(Leave password fields blank if you don't want to change password)</i>
-                </td>
-            </tr>
-            <tr>
-                <td align="right">Password:</td>
-                <td align="left"><input type="password" id="password"
-                                        name="password" size="45"></td>
-            </tr>
-            <tr>
-                <td align="right">Confirm Password:</td>
-                <td align="left"><input type="password" id="confirmPassword"
-                                        name="confirmPassword" size="45"></td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <button type="submit">Save</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button type="button" onClick="javascript:history.go(-1);">Cancel</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <form action="update_profile" method="post" style="max-width: 800px; margin: 0 auto;">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" class="form-control" value="${loggedCustomer.email}"
+                           readonly/>
+                </div>
+                <div class="form-group">
+                    <label for="firstname">First Name:</label>
+                    <input type="text" id="firstname" name="firstname" class="form-control"
+                           value="${loggedCustomer.firstname}" required minlength="2" maxlength="30"/>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Last Name:</label>
+                    <input type="text" id="lastname" name="lastname" class="form-control"
+                           value="${loggedCustomer.lastname}" required minlength="2" maxlength="30"/>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control" maxlength="16"
+                           placeholder="Leave blank if not changing"/>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
+                           maxlength="16" oninput="checkPasswordMatch(this)"/>
+                </div>
+                <div class="form-group">
+                    <label for="zipcode">Zip Code:</label>
+                    <input type="text" id="zipcode" name="zipcode" class="form-control"
+                           value="${loggedCustomer.zipcode}" required minlength="3" maxlength="24"/>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="text" id="phone" name="phone" class="form-control" value="${loggedCustomer.phone}"
+                           required minlength="9" maxlength="15"/>
+                </div>
+                <div class="form-group">
+                    <label for="address1">Address Line 1:</label>
+                    <input type="text" id="address1" name="address1" class="form-control"
+                           value="${loggedCustomer.addressLine1}" required minlength="10" maxlength="128"/>
+                </div>
+                <div class="form-group">
+                    <label for="address2">Address Line 2:</label>
+                    <input type="text" id="address2" name="address2" class="form-control"
+                           value="${loggedCustomer.addressLine2}" maxlength="128"/>
+                </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" class="form-control" value="${loggedCustomer.city}"
+                           required minlength="2" maxlength="32"/>
+                </div>
+                <div class="form-group">
+                    <label for="state">State:</label>
+                    <input type="text" id="state" name="state" class="form-control" value="${loggedCustomer.state}"
+                           required minlength="2" maxlength="45"/>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country:</label>
+                    <select id="country" name="country" class="form-control" required>
+                        <c:forEach items="${mapCountries}" var="country">
+                            <option value="${country.value}" ${loggedCustomer.country eq country.value ? 'selected' : ''}>${country.key}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col text-center">
+                <button type="submit" class="btn btn-primary mr-3">Save</button>
+                <input type="button" value="Cancel" class="btn btn-secondary" onclick="history.go(-1);"/>
+            </div>
+        </div>
     </form>
+
+    <jsp:directive.include file="footer.jsp"/>
 </div>
-<jsp:directive.include file="footer.jsp"/>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        $("#customerForm").validate({
-            rules: {
-                email: {
-                    required: true,
-                    email: true
-                },
-                fullName: "required",
-                confirmPassword: {
-                    equalTo: "#password"
-                },
-                phone: "required",
-                address: "required",
-                city: "required",
-                zipcode: "required",
-                country: "required"
-            },
-
-            messages: {
-                email: {
-                    required: "Please enter e-mail address",
-                    email: "Please enter a valid e-mail address"
-                },
-                fullName: "Please enter full name",
-                confirmPassword: {
-                    equalTo: "Confirm password does not match password"
-                },
-                phone: "Please enter phone number",
-                address: "Plese enter address",
-                city: "Plese enter city",
-                zipcode: "Please enter zip code",
-                country: "Plese enter country"
-            }
-        });
-
-        $("#buttonCancel").click(function () {
-            history.go(-1);
-        });
-
-    });
-
-</script>
+<script type="text/javascript" src="js/customer-form.js"></script>
 </body>
 </html>
