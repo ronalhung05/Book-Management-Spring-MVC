@@ -24,11 +24,23 @@
                     </div>
                 </div>
             </div>
-            <%--        <jsp:directive.include file="book_group.jsp"/>--%>
         </c:forEach>
     </div>
 
     <jsp:directive.include file="footer.jsp"/>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('.add-to-cart-btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();  // Ngăn chặn hành vi mặc định của thẻ <a>
+                const bookId = this.getAttribute('data-book-id');
+                console.log('Book ID:', bookId);  // Kiểm tra Book ID
+                window.location.href = 'add_to_cart?book_id=' + bookId;
+            });
+        });
+    });
+</script>
 </body>
 </html>
