@@ -6,47 +6,77 @@
     <jsp:param name="pageTitle" value="Admin Login"/>
 </jsp:include>
 <body>
-<div class="container mt-5">
-    <div class="row mb-4">
-        <div class="col text-center">
-            <h2>Book Store Administration</h2>
-            <h3>Admin Login</h3>
-        </div>
-    </div>
-
-    <c:if test="${message != null}">
-        <div class="row mb-3">
-            <div class="col text-center text-danger">
-                <h4>${message}</h4>
+<main>
+    <!-- section -->
+    <section class="my-lg-14 my-8">
+        <c:if test="${message != null}">
+            <div class="row">
+                <div class="col text-center"><h4 class="text-danger">${message}</h4></div>
             </div>
-        </div>
-    </c:if>
+        </c:if>
+        <form id="loginForm" action="login" method="post">
+            <div class="container">
+                <!-- row -->
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-12 col-md-6 col-lg-4 order-lg-1 order-2">
+                        <!-- img -->
+                        <img
+                                src="../images/svg-graphics/signin-g.svg"
+                                alt=""
+                                class="img-fluid"
+                        />
+                    </div>
+                    <!-- col -->
+                    <div
+                            class="col-12 col-md-6 offset-lg-1 col-lg-4 order-lg-2 order-1"
+                    >
+                        <div class="mb-lg-9 mb-5">
+                            <h1 class="mb-1 h2 fw-bold">Sign in to Admin Evergreen BookStore</h1>
+                            <p>
+                                Welcome back to Admin Evergreen BookStore! Enter your email to get started.
+                            </p>
+                        </div>
 
-    <form id="loginForm" action="login" method="post" class="mx-auto" style="max-width: 400px;">
-        <div class="card border-secondary">
-            <div class="card-body">
-                <div class="form-group row mb-3">
-                    <label class="col-sm-4 col-form-label" for="email">Email:</label>
-                    <div class="col-sm-8">
-                        <input type="email" name="email" id="email" required minlength="5" maxlength="30"
-                               class="form-control">
-                    </div>
-                </div>
-                <div class="form-group row mb-4">
-                    <label class="col-sm-4 col-form-label" for="password">Password:</label>
-                    <div class="col-sm-8">
-                        <input type="password" name="password" id="password" required minlength="4" maxlength="32"
-                               class="form-control">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col text-center">
-                        <button type="submit" class="btn btn-primary">Login</button>
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <input
+                                            type="email"
+                                            class="form-control"
+                                            name="email"
+                                            placeholder="Email"
+                                            required
+                                            id="email"
+                                    />
+                                </div>
+                                <div class="col-12">
+                                    <!-- input -->
+                                    <div class="password-field position-relative">
+                                        <input
+                                                id="password"
+                                                type="password"
+                                                name="password"
+                                                placeholder="Enter Password"
+                                                class="form-control"
+                                                required
+                                        />
+                                        <span
+                                        ><i id="passwordToggler" class="bi bi-eye-slash"></i
+                                        ></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-grid">
+                                    <button type="submit" class="btn btn-primary">
+                                        Sign In
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </section>
+</main>
 </body>
 </html>

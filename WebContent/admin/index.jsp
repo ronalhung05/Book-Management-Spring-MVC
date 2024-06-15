@@ -68,7 +68,7 @@
     </div>
     <div class="row">
         <table class="table table-hover table-bordered table-responsive-sm">
-            <thead class="bg-light-info">
+            <thead class="bg-light">
             <tr>
                 <th>Order ID</th>
                 <th>Ordered By</th>
@@ -97,19 +97,19 @@
                     </c:choose></td>
                     <td><c:choose>
                         <c:when test="${order.status == 'Processing'}">
-                            <span class="badge bg-info text-dark">Processing</span>
+                            <span class="badge bg-light-info text-dark-info">Processing</span>
                         </c:when>
                         <c:when test="${order.status == 'Shipping'}">
-                            <span class="badge bg-warning text-dark">Shipping</span>
+                            <span class="badge bg-light-warning text-dark-warning">Shipping</span>
                         </c:when>
                         <c:when test="${order.status == 'Delivered'}">
-                            <span class="badge bg-secondary text-dark">Delivered</span>
+                            <span class="badge bg-light-secondary text-dark">Delivered</span>
                         </c:when>
                         <c:when test="${order.status == 'Completed'}">
-                            <span class="badge bg-success text-dark">Completed</span>
+                            <span class="badge bg-light-primary text-dark-primary">Completed</span>
                         </c:when>
-                        <c:when test="${order.status == 'Canceled'}">
-                            <span class="badge bg-danger text-dark">Canceled</span>
+                        <c:when test="${order.status == 'Cancelled'}">
+                            <span class="badge bg-light-danger text-dark-danger">Canceled</span>
                         </c:when>
                         <c:otherwise>
                             <span class="badge bg-light text-dark">Unknown Status</span>
@@ -129,8 +129,9 @@
     </div>
 
     <div class="row">
-        <table class="table table-bordered table-striped table-hover table-responsive-sm">
-            <thead class="thead-dark">
+        <div class="table-responsive">
+        <table class="table table-centered table-hover mb-0 text-nowrap">
+            <thead class="bg-light">
             <tr>
                 <th>Book</th>
                 <th>Rating</th>
@@ -163,10 +164,11 @@
             </tbody>
         </table>
     </div>
-
+    </div>
 </div>
 <jsp:directive.include file="footer.jsp"/>
 <script>
+    new DataTable('#listReview');
     const donutChartOptions = {
         chart: {
             type: 'donut',
