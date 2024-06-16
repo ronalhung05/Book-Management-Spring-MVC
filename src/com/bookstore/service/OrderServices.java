@@ -322,7 +322,7 @@ public class OrderServices {
         String email = loggedCustomer.getEmail();
         String name = loggedCustomer.getFirstname();
         String title = "Order Confirmation from Evergreen BookStore";
-        String body = "Dear, Customer " + name + " for Purchasing books at our Evergreen BookStore, for more information, please log in to our Website to view your Oders! ^^\n" +
+        String body = "Dear, Customer " + name + ". Thank you for purchasing books at our Evergreen BookStore, for more information, please log in to our Website to view your Oders! ^^\n" +
                 "If you have any questions or need further assistance, please contact us at Website or call (+84) 0903091548.\n" +
                 "Thank you once again for choosing Evergreen BookStore. Have a great day!\n" +
                 "Best regards.";

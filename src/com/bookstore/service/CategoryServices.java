@@ -51,6 +51,7 @@ public class CategoryServices {
         if (existCategory != null) {
             String message = "Could not create category. A category with name: " + categoryName + " already exists";
             alertType = "warning";
+            listCategory(message, alertType);
         } else {
             Category category = new Category(categoryName);
             categoryDAO.create(category);
@@ -78,22 +79,23 @@ public class CategoryServices {
 
         int categoryId = Integer.parseInt(request.getParameter("categoryId"));
         String categoryName = request.getParameter("categoryName");
-
+        String message;
         Category categoryById = categoryDAO.get(categoryId);
         Category categoryByName = categoryDAO.findByCategoryName(categoryName);
         String alertType;
         //tên đã tồn tại nhưng ở id khác thì không thay đổi được
         if (categoryByName != null && categoryById.getCategoryId() != categoryByName.getCategoryId()) {
-            String message = "Could not update category. Category with name " + categoryByName.getName() + " already exists.";
+            message = "Could not update category. Category with name " + categoryByName.getName() + " already exists.";
             alertType = "warning";
-
+            
         } else {
             categoryById.setName(categoryName);
             categoryDAO.update(categoryById);
-            String message = "Category has been updated successfully";
+            message = "Category has been updated successfully";
             alertType = "success";
-            listCategory(message, alertType);
+           
         }
+        listCategory(message, alertType);
 
     }
 

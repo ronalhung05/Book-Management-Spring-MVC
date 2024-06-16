@@ -83,17 +83,14 @@ public class UserServices {
 
         if (userByEmail != null && userByEmail.getUserId() != userById.getUserId()) {
             String message = "Could not update user. User with email " + email + " already exists.";
-            listUser(message, "warning");
-
+            String alertType = "warning";
+            listUser(message, alertType);
+        }else {
+        	Users user = new Users(userId, email, fullName, password);
+            userDAO.update(user);
+            String message = "User has been updated successfully";
+            listUser(message, "success");
         }
-
-        Users user = new Users(userId, email, fullName, password);
-
-        userDAO.update(user);
-
-        String message = "User has been updated successfully";
-
-        listUser(message, "success");
 
     }
 
