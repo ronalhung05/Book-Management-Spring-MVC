@@ -9,12 +9,12 @@
 <div class="container">
     <jsp:directive.include file="header.jsp"/>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div>
                 <img class="mb-3 img-fluid" src="data:image/jpg;base64,${book.base64Image}" alt="${book.title}">
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="ps-lg-10 mt-6 mt-md-0">
                 <h2 class="mb-1">${book.title}</h2>
                 <small class="text-muted">by <span id="author">${book.author}</span></small>
@@ -37,8 +37,6 @@
                 </div>
                 <div class="mt-3 row justify-content-start g-2 align-items-center">
                     <div class="col-xxl-4 col-lg-4 col-md-5 col-5 d-grid">
-                        <!-- button -->
-                        <!-- btn -->
                         <button id="buttonAddToCart" type="button" class="btn btn-primary">
                             <i class="bi bi-bag me-2"></i>Add to cart
                         </button>

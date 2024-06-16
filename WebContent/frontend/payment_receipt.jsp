@@ -8,24 +8,8 @@
 </jsp:include>
 <body>
 <div class="container">
-    <jsp:directive.include file="header.jsp"/>
-
-    <div class="row mt-4">
-        <div class="col text-center">
-            <h4>You have made payment successfully. Thank you for purchasing!</h4>
-            <h4>Your Payment Receipt</h4>
-        </div>
-    </div>
-
     <jsp:directive.include file="receipt.jsp"/>
 
-    <div class="row mt-4">
-        <div class="col text-center">
-            <button type="button" class="btn btn-primary" onclick="printReceipt()">Print Receipt</button>
-        </div>
-    </div>
-
-    <jsp:directive.include file="footer.jsp"/>
 </div>
 
 <script>

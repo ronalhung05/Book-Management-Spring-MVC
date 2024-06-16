@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/richtext.min.css">
     <script type="text/javascript" src="../js/jquery.richtext.min.js"></script>
+    <link rel="stylesheet" href="../css/theme.min.css">
 </head>
 <body>
 <div class="container mt-4">
@@ -112,7 +113,6 @@
             <!-- Phần Description giữ nguyên -->
             <div class="mb-3 col-lg-12">
                 <label class="col-sm-4 col-form-label" for="description">Description:</label>
-
                 <textarea rows="5" cols="50" name="description" id="description" class="form-control"
                           required>${book.description}</textarea>
             </div>

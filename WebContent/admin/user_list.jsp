@@ -43,7 +43,6 @@
             <thead class="thead-dark">
             <tr>
                 <th>Index</th>
-                <th>ID</th>
                 <th>Email</th>
                 <th>Full Name</th>
                 <th>Actions</th>
@@ -53,7 +52,6 @@
             <c:forEach var="user" items="${listUsers}" varStatus="status">
                 <tr>
                     <td>${status.index + 1}</td>
-                    <td>${user.userId}</td>
                     <td>${user.email}</td>
                     <td>${user.fullName}</td>
                     <td>

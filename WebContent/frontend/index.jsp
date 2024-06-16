@@ -4,13 +4,6 @@
 <jsp:include page="page_head.jsp">
     <jsp:param name="pageTitle" value="Evergreen Books"/>
 </jsp:include>
-<style>
-    /* Tùy chỉnh chiều cao hình ảnh sách */
-    .book-image {
-        height: 200px; /* Hoặc một chiều cao cố định nào đó phù hợp */
-        object-fit: cover; /* Đảm bảo hình ảnh phủ đầy khung mà không làm méo */
-    }
-</style>
 <body>
 <div class="container">
 

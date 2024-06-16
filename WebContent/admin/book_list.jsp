@@ -41,7 +41,7 @@
 
 
     <div class="table-responsive">
-        <table id="bookTable" class="table table-centered table-hover mb-0 text-nowrap table-striped table-bordered">
+        <table id="bookTable" class="table table-centered table-hover mb-0 text-nowrap">
             <thead class="thead-dark">
             <tr>
                 <th>Index</th>
