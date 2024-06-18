@@ -21,9 +21,13 @@ public class CustomerLoginServlet extends HttpServlet {
 
     //do get -> nhấp link login
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CustomerServices customerServices = new CustomerServices(request, response);
-		customerServices.showLogin();
-
+		String code = request.getParameter("code");
+		if (code != null && !code.isEmpty()) {
+			processRequest(request, response);
+		} else {
+			CustomerServices customerService = new CustomerServices(request, response);
+			customerService.showLogin();
+		}
 	}
 
 	//do post -> gửi từ link login đó về 
@@ -32,4 +36,8 @@ public class CustomerLoginServlet extends HttpServlet {
 		customerServices.doLogin();
 	}
 
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		CustomerServices customerService = new CustomerServices(request, response);
+		customerService.loginGoogle();
+	}
 }
