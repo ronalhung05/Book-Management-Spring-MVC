@@ -1,4 +1,4 @@
-package com.bookstore.controller.frontend;
+package com.bookstore.controller.frontend.customer;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

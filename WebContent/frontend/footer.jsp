@@ -6,7 +6,7 @@
             <li class="nav-item"><a href="contact" class="nav-link px-2 text-body-secondary">Contact</a></li>
             <li class="nav-item"><a href="policy" class="nav-link px-2 text-body-secondary">Privacy Policy</a></li>
         </ul>
-        <p class="text-center text-body-secondary">© 2024 Company, Inc</p>
+        <p class="text-center text-body-secondary">&copy; 2024 Company, Inc</p>
     </footer>
 </div>
 <script type="text/javascript" src="js/jquery-3.7.1.min.js"></script>

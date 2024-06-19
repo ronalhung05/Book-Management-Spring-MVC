@@ -44,9 +44,13 @@
                         <div><h5>${item.key.title}</h5></div>
 
                         <div>
-                            <input type="hidden" name="bookId" value="${item.key.bookId}"/>
-                            <input type="number" name="quantity${status.index + 1}" value="${item.value}"
-                                   class="form-control" style="max-width: 50px" size="5" required step="1" min="1"/>
+                            <div class="input-group input-spinner">
+                                <input type="hidden" name="bookId" value="${item.key.bookId}"/>
+                                <input type="button" value="-" class="button-minus btn btn-sm" data-field="quantity${status.index + 1}">
+                                <input type="number" step="1" max="50" value="${item.value}" name="quantity${status.index + 1}"
+                                       class="quantity-field form-control-sm form-input" min="1" required>
+                                <input type="button" value="+" class="button-plus btn btn-sm" data-field="quantity${status.index + 1}">
+                            </div>
                         </div>
 
                         <div>
@@ -105,12 +109,51 @@
 </div>
 
 <script type="text/javascript">
-
     $(document).ready(function () {
         $("#clearCart").click(function () {
             window.location = 'clear_cart';
         });
     });
+    ocument.addEventListener('DOMContentLoaded', function() {
+        // Lấy tất cả các nhóm input-spinner
+        var spinners = document.querySelectorAll('.input-spinner');
+
+        spinners.forEach(function(spinner) {
+            // Lấy các nút và trường input bên trong mỗi nhóm
+            var buttonMinus = spinner.querySelector('.button-minus');
+            var buttonPlus = spinner.querySelector('.button-plus');
+            var input = spinner.querySelector('input[type="number"]');
+
+            // Chuyển đổi giá trị thành số nguyên an toàn
+            var safeParseInt = function(value, defaultValue) {
+                var parsed = parseInt(value, 10);
+                return isNaN(parsed) ? defaultValue : parsed;
+            };
+
+            // Xử lý sự kiện khi nhấn nút "-"
+            buttonMinus.addEventListener('click', function(event) {
+                event.preventDefault(); // Chặn sự kiện mặc định
+                var value = safeParseInt(input.value, 1);
+                var minValue = safeParseInt(input.min, 1);
+                if (value > minValue) {
+                    input.value = value - 1;
+                    input.dispatchEvent(new Event('change'));
+                }
+            });
+
+            // Xử lý sự kiện khi nhấn nút "+"
+            buttonPlus.addEventListener('click', function(event) {
+                event.preventDefault(); // Chặn sự kiện mặc định
+                var value = safeParseInt(input.value, 1);
+                var maxValue = safeParseInt(input.max, Infinity);
+                if (value < maxValue) {
+                    input.value = value + 1;
+                    input.dispatchEvent(new Event('change'));
+                }
+            });
+        });
+    });
+
 </script>
 </body>
 </html>

@@ -68,8 +68,8 @@ public class CustomerServices {
             request.setAttribute("message", message);
             request.setAttribute("alertType", alertType);
         }
-        request.setAttribute("listCustomer", listCustomer);
 
+        request.setAttribute("listCustomer", listCustomer);
         String listPage = "customer_list.jsp";
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(listPage);
         requestDispatcher.forward(request, response);

@@ -10,6 +10,7 @@
     <script type="text/javascript" src="js/jquery.validate.min.js"></script>
     <link rel="stylesheet" href="css/theme.min.css">
     <!-- choose one -->
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
