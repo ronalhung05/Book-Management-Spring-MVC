@@ -40,15 +40,12 @@ public class CommonFilter extends HttpFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest)request;
 		String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
 		
-		if(!path.startsWith("/admin")) {
+		if(!path.startsWith("/admin/")) {
 			List<Category> listCategory = categoryDAO.listAll();
 			request.setAttribute("listCategory", listCategory);
 			
 		    System.out.print("CommonFilter->doFilter");
 		}
-		
-		
-	
 		
 		chain.doFilter(request, response);
 	}

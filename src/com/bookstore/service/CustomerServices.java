@@ -37,7 +37,7 @@ public class CustomerServices {
         String state = request.getParameter("state");
         String zipcode = request.getParameter("zipcode");
         String country = request.getParameter("country");
-
+        System.out.println("Email nè: " + email);
         if (email != null && !email.isEmpty()) {
             customer.setEmail(email);
         }
@@ -270,5 +270,49 @@ public class CustomerServices {
         String registerForm = "frontend/register_form.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(registerForm);
         dispatcher.forward(request, response);
+    }
+
+    public void loginGoogle() throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String code = request.getParameter("code");
+        GoogleLoginServices gg = new GoogleLoginServices();
+        try {
+            String accessToken = gg.getToken(code);
+            System.out.println("Access Token: " + accessToken);
+            if (accessToken != null) {
+                Customer customer = GoogleLoginServices.getUserInfo(accessToken);
+                System.out.println("Customer Info: " + customer.getEmail());
+
+                // Kiểm tra xem khách hàng đã tồn tại trong cơ sở dữ liệu chưa
+                Customer existingCustomer = customerDAO.findByEmail(customer.getEmail());
+                if (existingCustomer == null) {
+                    // Nếu khách hàng chưa tồn tại, tạo mới
+                    request.setAttribute("customer", customer);
+                    CommonUtility.generateContryList(request);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("frontend/complete_registration.jsp");
+                    requestDispatcher.forward(request, response);
+                } else {
+                    // Nếu khách hàng đã tồn tại, đăng nhập và hiển thị hồ sơ
+                    HttpSession session = request.getSession();
+                    session.setAttribute("loggedCustomer", existingCustomer);
+                    showCustomerProfile();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void completeRegistration() throws ServletException, IOException {
+        Customer customer = new Customer();
+        updateCustomerFieldsFromForm(customer);
+        customerDAO.create(customer);
+
+        // Cập nhật thông tin khách hàng trong phiên
+        HttpSession session = request.getSession();
+        session.setAttribute("loggedCustomer", customer);
+
+        // Chuyển hướng đến trang hồ sơ
+        showCustomerProfile();
     }
 }
