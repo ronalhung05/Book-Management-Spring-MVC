@@ -17,11 +17,11 @@
     </div>
 
     <c:if test="${user != null}">
-    <form action="update_user" method="post" style="max-width: 400px; margin: 0 auto;">
+    <form action="update_user" method="post" style="max-width: 400px; margin: 0 auto;" class="row g-3 needs-validation" novalidate>
         <input type="hidden" name="userId" value="${user.userId}">
         </c:if>
         <c:if test="${user == null}">
-        <form action="create_user" method="post" style="max-width: 400px; margin: 0 auto;">
+        <form action="create_user" method="post" style="max-width: 400px; margin: 0 auto;" class="row g-3 needs-validation" novalidate>
             </c:if>
 
             <div class="form-group row mb-3">
@@ -29,7 +29,11 @@
                 <div class="col-sm-8">
                     <input type="email" name="email" id="email" value="${user.email}" class="form-control" required
                            minlength="5" maxlength="30"/>
+                    <div class="invalid-feedback">
+                        Please provide a valid email.
+                    </div>
                 </div>
+
             </div>
 
             <div class="form-group row mb-3">
@@ -37,7 +41,11 @@
                 <div class="col-sm-8">
                     <input type="text" name="fullname" id="fullname" value="${user.fullName}" class="form-control"
                            required minlength="3" maxlength="30"/>
+                    <div class="invalid-feedback">
+                        Please provide a valid name.
+                    </div>
                 </div>
+
             </div>
 
             <div class="form-group row mb-4">
@@ -45,7 +53,11 @@
                 <div class="col-sm-8">
                     <input type="password" name="password" id="password" value="${user.password}" class="form-control"
                            required minlength="4" maxlength="32"/>
+                    <div class="invalid-feedback">
+                        Please provide a valid password.
+                    </div>
                 </div>
+
             </div>
 
             <div class="row mb-4">

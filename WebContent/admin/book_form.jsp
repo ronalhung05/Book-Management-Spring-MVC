@@ -35,12 +35,12 @@
     </div>
 
     <c:if test="${book != null}">
-    <form action="update_book" method="post" enctype="multipart/form-data" style="max-width: 600px; margin: 0 auto;">
+    <form action="update_book" method="post" enctype="multipart/form-data" style="max-width: 600px; margin: 0 auto;" class="row g-3 needs-validation" novalidate>
         <input type="hidden" name="bookId" value="${book.bookId}">
         </c:if>
         <c:if test="${book == null}">
         <form action="create_book" method="post" enctype="multipart/form-data"
-              style="max-width: 600px; margin: 0 auto;">
+              style="max-width: 600px; margin: 0 auto;" class="row g-3 needs-validation" novalidate>
             </c:if>
 
             <div class="form-group row mb-3">
@@ -63,6 +63,9 @@
                 <label class="col-sm-4 col-form-label" for="title">Title:</label>
                 <div class="col-sm-8">
                     <input type="text" name="title" id="title" value="${book.title}" class="form-control" required/>
+                    <div class="invalid-feedback">
+                        Please provide a valid title.
+                    </div>
                 </div>
             </div>
 
@@ -70,6 +73,9 @@
                 <label class="col-sm-4 col-form-label" for="author">Author:</label>
                 <div class="col-sm-8">
                     <input type="text" name="author" id="author" value="${book.author}" class="form-control" required/>
+                    <div class="invalid-feedback">
+                        Please provide a valid author.
+                    </div>
                 </div>
             </div>
 
@@ -77,6 +83,9 @@
                 <label class="col-sm-4 col-form-label" for="isbn">ISBN:</label>
                 <div class="col-sm-8">
                     <input type="text" name="isbn" id="isbn" value="${book.isbn}" class="form-control" required/>
+                    <div class="invalid-feedback">
+                        Please provide a valid isbn.
+                    </div>
                 </div>
             </div>
 
@@ -85,6 +94,9 @@
                 <div class="col-sm-8">
                     <input type="date" name="publishDate" id="publishDate" class="form-control" required
                            value="<fmt:formatDate pattern='yyyy-MM-dd' value='${book.publishDate}' />"/>
+                    <div class="invalid-feedback">
+                        Please choose a valid date.
+                    </div>
                 </div>
             </div>
 
@@ -100,6 +112,9 @@
 
                     <img id="thumbnail" alt="Image Preview" class="img-thumbnail mt-2"
                          src="data:image/jpg;base64,${book.base64Image}"/>
+                    <div class="invalid-feedback">
+                        Please upload your image.
+                    </div>
                 </div>
             </div>
 
@@ -107,7 +122,11 @@
                 <label class="col-sm-4 col-form-label" for="price">Price:</label>
                 <div class="col-sm-8">
                     <input type="text" name="price" id="price" value="${book.price}" class="form-control" required/>
+                    <div class="invalid-feedback">
+                        Please provide a valid price.
+                    </div>
                 </div>
+
             </div>
 
             <!-- Phần Description giữ nguyên -->
@@ -115,6 +134,9 @@
                 <label class="col-sm-4 col-form-label" for="description">Description:</label>
                 <textarea rows="5" cols="50" name="description" id="description" class="form-control"
                           required>${book.description}</textarea>
+                <div class="invalid-feedback">
+                    Please provide a valid description.
+                </div>
             </div>
 
             <div class="row mb-4">

@@ -27,14 +27,6 @@
                     <span class="fw-bold text-dark">$${book.price}</span>
                 </div>
                 <hr class="my-6">
-                <div>
-                    <div class="input-group input-spinner  ">
-                        <input type="button" value="-" class="button-minus btn btn-sm " data-field="quantity">
-                        <input type="number" step="1" max="10" value="1" name="quantity"
-                               class="quantity-field form-control-sm form-input   ">
-                        <input type="button" value="+" class="button-plus btn btn-sm " data-field="quantity">
-                    </div>
-                </div>
                 <div class="mt-3 row justify-content-start g-2 align-items-center">
                     <div class="col-xxl-4 col-lg-4 col-md-5 col-5 d-grid">
                         <button id="buttonAddToCart" type="button" class="btn btn-primary">

@@ -29,8 +29,8 @@ import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 
 public class PaymentServices {
-	private static final String CLIENT_ID = "AQCwCl7Au971zWOG-2jsHoVIA4699NPQmo5w-KtH7kfnXxFMkZfrwaajVF2fUMIxDPy_tDpqalIL-tIu";
-	private static final String CLIENT_SECRET = "EOksLTAwlHxZN538G_qoHzTb0s6ie-BVwYWXrhQlGd2meQllqhPU8RC0Bhh0gpt3bsfsaIQqwPQKAoPe";
+	private static final String CLIENT_ID = "AQkQMKje8QfGFRVw-YK0aVaPAQcSDDBT3FCWP6YCL2wx_4SRFOF-k0ydQFPClsJWM1te83D7d2mXRulH";
+	private static final String CLIENT_SECRET = "ELl82Et97LukKKwVj_bQMGw6J0YauaPou3kaMjHuRCXVuIfE0m-96lkrs8U6cL4Y1YbTLnjTrlsWdRC6";
 	private String mode = "sandbox";
 
 	private HttpServletRequest request;

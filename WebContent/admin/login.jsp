@@ -9,12 +9,7 @@
 <main>
     <!-- section -->
     <section class="my-lg-14 my-8">
-        <c:if test="${message != null}">
-            <div class="row">
-                <div class="col text-center"><h4 class="text-danger">${message}</h4></div>
-            </div>
-        </c:if>
-        <form id="loginForm" action="login" method="post">
+        <form id="loginForm" action="login" method="post" class="row g-3 needs-validation" novalidate>
             <div class="container">
                 <!-- row -->
                 <div class="row justify-content-center align-items-center">
@@ -37,9 +32,10 @@
                             </p>
                         </div>
 
-                        <form>
+                        <form class="row g-3 needs-validation" novalidate>
                             <div class="row g-3">
                                 <div class="col-12">
+                                    <label for="email" class="form-label visually-hidden">Email address</label>
                                     <input
                                             type="email"
                                             class="form-control"
@@ -48,10 +44,14 @@
                                             required
                                             id="email"
                                     />
+                                    <div class="invalid-feedback">
+                                        Please provide a valid email.
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <!-- input -->
                                     <div class="password-field position-relative">
+                                        <label for="password" class="form-label visually-hidden">Password</label>
                                         <input
                                                 id="password"
                                                 type="password"
@@ -63,6 +63,9 @@
                                         <span
                                         ><i id="passwordToggler" class="bi bi-eye-slash"></i
                                         ></span>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid password.
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12 d-grid">
@@ -78,5 +81,31 @@
         </form>
     </section>
 </main>
+<script src="../js/vendors/validation.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    $(document).ready(function() {
+        <c:if test="${message != null}">
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+        toastr.warning("${message}");
+        </c:if>
+    });
+</script>
 </body>
 </html>

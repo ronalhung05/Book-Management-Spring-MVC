@@ -56,17 +56,23 @@
                 </div>
 
                 <div class="mb-3 row">
-                    <label class="col-sm-4 col-form-label bold-label">Headline:</label>
+                    <label class="col-sm-4 col-form-label bold-label" for="headline">Headline:</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" name="headline" value="${review.headline}" required
+                        <input type="text" class="form-control" id="headline" name="headline" value="${review.headline}" required
                                minlength="10" maxlength="128"/>
+                        <div class="invalid-feedback">
+                            Please provide a valid headline.
+                        </div>
                     </div>
                 </div>
 
                 <div class="mb-3 row">
-                    <label class="col-sm-4 col-form-label bold-label">Comment:</label>
+                    <label class="col-sm-4 col-form-label bold-label" for="comment">Comment:</label>
                     <div class="col-sm-8">
-                        <textarea class="form-control" name="comment" rows="5" required>${review.comment}</textarea>
+                        <textarea class="form-control" id="comment" name="comment" rows="5" required>${review.comment}</textarea>
+                        <div class="invalid-feedback">
+                            Please provide a valid comment.
+                        </div>
                     </div>
                 </div>
 
