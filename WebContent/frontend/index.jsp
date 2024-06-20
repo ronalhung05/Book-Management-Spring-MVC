@@ -55,7 +55,7 @@
     </div>
 
     <div class="row g-4 row-cols-lg-5 row-cols-2 row-cols-md-3">
-        <c:forEach items="${listFavoredBooks}" var="book">
+        <c:forEach items="${listMostFavoredBooks}" var="book">
             <div class="col">
                 <div class="card h-100">
                     <div class="card-body">

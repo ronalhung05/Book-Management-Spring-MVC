@@ -23,13 +23,13 @@
 
     <!-- Conditional form tags should wrap their contents correctly -->
     <c:if test="${customer != null}">
-        <form action="update_customer" method="post" style="max-width: 700px; margin: 0 auto;">
+        <form action="update_customer" method="post" style="max-width: 700px; margin: 0 auto;" class="row g-3 needs-validation" novalidate>
             <input type="hidden" name="customerId" value="${customer.customerId}">
             <jsp:directive.include file="../common/customer_form.jsp" />
         </form>
     </c:if>
     <c:if test="${customer == null}">
-        <form action="create_customer" method="post" style="max-width: 700px; margin: 0 auto;">
+        <form action="create_customer" method="post" style="max-width: 700px; margin: 0 auto;" class="row g-3 needs-validation" novalidate>
             <jsp:directive.include file="../common/customer_form.jsp" />
         </form>
     </c:if>
