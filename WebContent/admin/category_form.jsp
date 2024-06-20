@@ -17,18 +17,21 @@
     </div>
 
     <c:if test="${category != null}">
-    <form action="update_category" method="post" style="max-width: 400px; margin: 0 auto;">
-        <input type="hidden" name="categoryId" value="${category.categoryId}">
+    <form action="update_category" method="post" style="max-width: 400px; margin: 0 auto;" class="row g-3 needs-validation" novalidate>
+        <input type="hidden" name="categoryId" value="${category.categoryId}" >
         </c:if>
         <c:if test="${category == null}">
-        <form action="create_category" method="post" style="max-width: 400px; margin: 0 auto;">
+        <form action="create_category" method="post" style="max-width: 400px; margin: 0 auto;" class="row g-3 needs-validation" novalidate>
             </c:if>
 
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Name:</label>
+                <label class="col-sm-4 col-form-label" for="categoryName">Name:</label>
                 <div class="col-sm-8">
-                    <input type="text" name="categoryName" size="20" value="${category.name}" class="form-control"
+                    <input type="text" id="categoryName" name="categoryName" size="20" value="${category.name}" class="form-control"
                            required minlength="3" maxlength="20"/>
+                    <div class="invalid-feedback">
+                        Please provide a valid name.
+                    </div>
                 </div>
             </div>
 

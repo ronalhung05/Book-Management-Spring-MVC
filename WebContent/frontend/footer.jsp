@@ -31,3 +31,5 @@
 <script src="js/vendors/increment-value.js"></script>
 <script src="libs/slick-carousel/slick/slick.min.js"></script>
 <script src="js/vendors/slick-slider.js"></script>
+<script src="js/vendors/validation.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
