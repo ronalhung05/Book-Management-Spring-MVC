@@ -55,10 +55,17 @@
                     <td>${user.email}</td>
                     <td>${user.fullName}</td>
                     <td>
-                        <a href="edit_user?id=${user.userId}" class="text-muted"><i
-                                class="bi bi-pencil-square"></i></a> &nbsp;
-                        <a href="javascript:void(0);" class="deleteLink text-danger" id="${user.userId}"><i
-                                class="bi bi-trash"></i></a>
+                        <c:if test="${sessionScope.useremail eq user.email}">
+                            <a href="edit_user?id=${user.userId}" class="text-muted"><i
+                                    class="bi bi-pencil-square"></i></a> &nbsp;
+                        </c:if>
+
+                        <c:if test="${sessionScope.useremail ne user.email}">
+                            <a href="edit_user?id=${user.userId}" class="text-muted"><i
+                                    class="bi bi-pencil-square"></i></a> &nbsp;
+                            <a href="javascript:void(0);" class="deleteLink text-danger" id="${user.userId}"><i
+                                    class="bi bi-trash"></i></a>
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>
